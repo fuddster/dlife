@@ -39,6 +39,7 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+console.log("Loading CSV");
 d3.csv("bs_data.csv", type, function(error, data) {
   if (error) throw error;
 

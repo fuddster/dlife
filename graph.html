@@ -43,7 +43,7 @@ console.log("Loading CSV");
 d3.csv("bs_data.csv", type, function(error, data) {
   if (error) throw error;
 
-  console.log(data.epoch);
+  console.log(data);
   console.log(data.bs);
   x.domain(d3.extent(data, function(d) { return d.epoch; }));
   y.domain(d3.extent(data, function(d) { return d.bs; }));

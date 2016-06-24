@@ -43,6 +43,7 @@ console.log("Loading CSV");
 d3.csv("bs_data.csv", type, function(error, data) {
   if (error) throw error;
 
+  data.forEach(function(d){ d['epoch'] = +d['epoch']; });
   console.log("function");
   x.domain(d3.extent(data, function(d) { return d.epoch; }));
   y.domain(d3.extent(data, function(d) { return d.bs; }));
@@ -73,8 +74,8 @@ console.log("After load in script");
 function type(d) {
   console.log("Entering type(d)");
   console.log(d.epoch);
-  l = Long.parseLong(d.epoch);
-  date = new Date(l);
+  //l = Long.parseLong(d.epoch);
+  date = new Date(d.epoch);
   console.log(date);
   d.epoch = formatDate.parse(date);
   console.log("getting bs");

@@ -72,7 +72,8 @@ console.log("After load in script");
 
 function type(d) {
   console.log("Entering type(d)");
-  date = new Date(d.epoch);
+  console.log(d.epoch);
+  date = new Date((Long)d.epoch);
   console.log(date);
   d.epoch = formatDate.parse(date);
   console.log("getting bs");

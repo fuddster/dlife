@@ -13,7 +13,7 @@ var margin = {top: 20, right: 20, bottom: 30, left: 50},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-var formatDate = d3.time.format("%d-%b-%y");
+var formatDate = d3.time.format("%H:%M");
 
 var x = d3.time.scale()
     .range([0, width]);
@@ -72,7 +72,8 @@ console.log("After load in script");
 
 function type(d) {
   console.log("Entering type(d)");
-  d.epoch = formatDate.parse(d.epoch);
+  date = new Date(d.epoch);
+  d.epoch = formatDate.parse(date);
   d.bs = +d.bs;
   console.log(d);
   return d;

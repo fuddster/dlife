@@ -77,7 +77,7 @@ function type(d) {
   //l = Long.parseLong(d.epoch);
   date = new Date(d.epoch);
   console.log(date);
-  d.epoch = formatDate.parse(date);
+  d.epoch = formatDate(date);
   console.log("getting bs");
   d.bs = +d.bs;
   console.log(d);

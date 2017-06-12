@@ -1,0 +1,100 @@
+<html>
+
+	<head>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" user-scalable="no">
+		<title>D3 Example: Selections and Data Joins</title>
+			
+		<style type="text/css">
+
+			#data-field {
+				height: 30px;
+				padding-right: 20px;
+			}
+
+			.bar {
+				width: 30px;
+				margin-right: 20px;
+				background-color: #F4F5F7;
+				border: 1px solid #C5C5C5;
+				float: left;
+			}
+
+		</style>
+
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+	</head>
+
+	<body>
+
+		<div id="data-field"></div>
+		<button id="add-btn">Add Element</button> Click on a bar to remove it
+		
+		<div id="chart"></div>
+
+		<script type="text/javascript">
+
+			// Our data set
+			var numbers = [15, 8, 42, 4];
+
+			// Updates the visualization 
+			function update() {
+
+			  // Update selection: Resize and position existing 
+			  // DOM elements with data bound to them.
+			  var selection = d3.select("#chart")
+			    .selectAll(".bar").data(numbers)
+			    .style("height", function(d){ 
+			      return d; 
+			    })
+			    .style("margin-top", function(d){ 
+			      return 100 - d; 
+			    });
+
+			  // Enter selection: Create new DOM elements for added 
+			  // data items, resize and position them and attach a 
+			  // mouse click handler.
+			  selection.enter()
+			    .append("div").attr("class", "bar")
+			    .style("height", function(d){ 
+			      return d; 
+			    })
+			    .style("margin-top", function(d){ 
+			      return 100 - d; 
+			    })
+			    .on("click", function(e, i){
+			      numbers.splice(i, 1);
+			      update();
+			    });
+
+			  // Exit selection: Remove elements without data from the DOM
+			  selection.exit().remove();
+
+			  // Update text field for display of current data set
+			  d3.select("#data-field").text("numbers: [" + numbers.join(", ") + "]")
+
+			};
+
+			update();
+			
+
+
+			// Add a new datum to the set
+			d3.select("#add-btn").on("click", function(e){
+				
+				numbers.push(Math.round(Math.random() * 100));
+
+				update();
+			});
+
+
+			
+
+
+		</script>
+
+	</body>
+
+</html>

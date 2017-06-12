@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="http://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="bs.js"></script>
+	<link rel="stylesheet" type="text/css" href="bs.css" media="screen" />
+</head>
+<body>
+	<svg class="bgGraph" width="1200" height="600"></svg>
+
+	<script type="text/javascript">
+		var bs = new BloodSugar(130);
+		alert("Bring your blood glucose level (BGL) to 100");
+	</script>
+
+    <script type="text/javascript" src="goals.js"></script>
+    <script type="text/javascript" src="screen.js"></script>
+
+	<script type="text/javascript">
+		bs_screen.enableBolus(60); // Enable the bolus button with a delay of 60 minutes
+		bs_screen.displayISF();
+		//bs_screen.setSuccessSteadyAt(100);
+		addGoal("At100", 0, 100, 3); // Equals 100 for 1 duration
+		goalsList();
+	</script>
+
+</body>

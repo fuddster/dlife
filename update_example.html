@@ -1,0 +1,152 @@
+<html>
+
+	<head>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" user-scalable="no">
+		<title>D3 Example: Selections and Data Joins</title>
+			
+		<style type="text/css">
+
+			#data-field {
+				height: 30px;
+				padding-right: 20px;
+			}
+
+			.bar {
+				width: 30px;
+				margin-right: 20px;
+				background-color: #F4F5F7;
+				border: 1px solid #C5C5C5;
+				float: left;
+			}
+
+			.bgDot {
+				fill: #0f0;
+			}
+
+			.bgGraph {
+				background-color: #f2f3f5;
+				border: 1px solid #000000;
+			}
+		</style>
+
+		<script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+
+	</head>
+
+	<body>
+
+		<div id="data-field"></div>
+		<button id="add-btn">Add Element</button> Click on a bar to remove it
+		
+		<div id="chart"></div>
+
+		<svg class="bgGraph" width="300" height="200"></svg>
+
+		<script type="text/javascript">
+
+			var svg = d3.select(".bgGraph"),
+				margin = {top: 120, right: 20, bottom: 20, left: 40},
+				width = +svg.attr("width") - margin.left - margin.right,
+				height = +svg.attr("height") - margin.top - margin.bottom,
+				g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+			var xScale = d3.scaleLinear()
+				.domain([0, 24])
+				.range([0, width]);
+
+			var yScale = d3.scaleLinear()
+				.domain([0, 260])
+				.range([height, 0]);
+
+			// Our data set
+			var numbers = [15];
+			var data = [130];
+			var dotsPerHr = 1;
+
+			// Updates the visualization 
+			function update() {
+
+			  // Update selection: Resize and position existing 
+			  // DOM elements with data bound to them.
+			  var selection = d3.select("#chart")
+			    .selectAll(".bar").data(numbers)
+			    .style("height", function(d){ 
+			      return d; 
+			    })
+			    .style("margin-top", function(d){ 
+			      return 100 - d; 
+			    });
+
+			  var dot = d3.select(".bgGraph")
+			    .selectAll(".bgDot")
+				.data(data)
+				.attr("r", 3)
+				.attr("cx", function(d, i) {
+					console.log("i = " +i+" dotsPerHr = "+dotsPerHr); 
+					console.log("xscale = "+xScale(i/dotsPerHr));
+					return xScale(i / dotsPerHr); } )
+				.attr("cy", function(d, i) { return yScale(d); } );
+	
+			  // Enter selection: Create new DOM elements for added 
+			  // data items, resize and position them and attach a 
+			  // mouse click handler.
+			  selection.enter()
+			    .append("div").attr("class", "bar")
+			    .style("height", function(d){ 
+			      return d; 
+			    })
+			    .style("margin-top", function(d){ 
+			      return 100 - d; 
+			    })
+			    .on("click", function(e, i){
+			      numbers.splice(i, 1);
+				  data.splice(i, 1);
+			      update();
+			    });
+
+			  dot.enter()
+				.append("circle")
+				.attr("class", "bgDot")
+				.attr("r", 5)
+				.attr("cx", function(d, i) { 
+					console.log("i = " +i+" dotsPerHr = "+dotsPerHr); 
+					console.log("xscale = "+xScale(i/dotsPerHr));
+					return xScale(i / dotsPerHr); } )
+				.attr("cy", function(d, i) { 
+					console.log("d = "+d);
+					console.log("yScale = "+yScale(d));
+					return yScale(d); } );
+				
+			  // Exit selection: Remove elements without data from the DOM
+			  selection.exit().remove();
+			  dot.exit().remove();
+			  
+			  // Update text field for display of current data set
+			  d3.select("#data-field").text("numbers: [" + numbers.join(", ") + "]    data: [" + data.join(",") + "]")
+
+			};
+
+			update();
+			
+
+
+			// Add a new datum to the set
+			d3.select("#add-btn").on("click", function(e){
+				
+				numbers.push(Math.round(Math.random() * 100));
+			    data.push(Math.round(Math.random() * 100));
+
+				update();
+			});
+
+
+			
+
+
+		</script>
+
+	</body>
+
+</html>

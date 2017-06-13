@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="http://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="bs.js"></script>
+	<link rel="stylesheet" type="text/css" href="bs.css" media="screen" />
+</head>
+<body>
+	<svg class="bgGraph" width="1200" height="600"></svg>
+
+	<script type="text/javascript">
+		var bs = new BloodSugar(130);
+		alert("Lunch in 60 minutes - 45 carbs\n\nKeep your blood glucose level (BGL) between 100 and 120\nfor 2 hours");
+	</script>
+
+    <script type="text/javascript" src="goals.js"></script>
+    <script type="text/javascript" src="screen.js"></script>
+
+	<script type="text/javascript">
+		bs_screen.enableBolus(60); // Enable the bolus button with a delay of 60 minutes
+		//bs_screen.enableEating();
+		bs_screen.displayISF();
+		addGoal("Over99", typeList.above, 99, 24); // Above 99 for 24 durations (2 hrs)
+		addGoal("Below121", typeList.below, 121, 24); // Below 121 for 24 durations (2 hrs)
+		goalsList();
+		bs.addCarbs(45, 60, "Lunch time!  Sandwich and a drink - 45 carbs", bs_screen.delay);
+	</script>
+
+</body>

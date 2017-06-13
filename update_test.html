@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="http://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="bs.js"></script>
+    <style>
+.lowLine {
+	fill: #ff0;
+}
+
+.highLine {
+	fill: #ff0;
+}
+
+.maxLowLine { 
+	fill: #f00;
+}
+
+.maxHighLine {
+	fill: #f00;
+}
+
+.bgDot {
+	fill: #0f0;
+}
+
+svg {
+	background: #000;
+}
+
+.axis {
+	fill: none;
+	stroke: #fff;
+}
+
+.axis path {
+	stroke: #fff;
+}
+
+    </style>
+</head>
+<body>
+    <p>The value is: <span id="value">0</span> (<span id="rawValue">0</span>)</p>
+
+	<svg class="bgGraph" width="1200" height="600"></svg>
+
+    <script type="text/javascript">
+
+	console.log("Starting... D3 Version "+d3.version);
+
+	console.log("BS Starting...");
+	bs = new BloodSugar(130);
+	bs.addInsulin(1, 1); // Add 1 unit of insulin with a delay of 1 hr
+
+	var dotsPerHr = (60 / 5),  // Every 5 minutes
+	//    hrs = 24, // 24 hours
+		hrs = 12,
+		n = dotsPerHr * hrs, // Number of items on y axis - For 24 hrs
+		guideDotsPerHr = 2,
+		numOfGuideDots = hrs * guideDotsPerHr, // Every 1/2 hr
+		lowLevel = 80,
+		highLevel = 150,
+		maxHigh = 250,
+		maxLow = 40;
+
+	var minuteCount = 0,
+		bgCount = 0,
+		delay = 500;
+//		delay = 5000;
+
+	//var	data = d3.range(n).map(function(d) { return -1 });
+	var data = [bs.bloodSugar];
+	console.log("Starting data = " + data);
+	var	lowLine = d3.range(numOfGuideDots).map(function(d) { return lowLevel });
+	var	highLine = d3.range(numOfGuideDots).map(function(d) { return highLevel });
+	var	maxLowLine = d3.range(numOfGuideDots).map(function(d) { return maxLow });
+	var	maxHighLine = d3.range(numOfGuideDots).map(function(d) { return maxHigh });
+
+	var svg = d3.select(".bgGraph"),
+		margin = {top: 120, right: 20, bottom: 20, left: 40},
+		width = +svg.attr("width") - margin.left - margin.right,
+		height = +svg.attr("height") - margin.top - margin.bottom,
+		g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		
+	var xScale = d3.scaleLinear()
+		.domain([0, hrs])
+		.range([0, width]);
+
+	var yScale = d3.scaleLinear()
+		.domain([0, 260])
+		.range([height, 0]);
+
+	var lineGroup = g.append("g");
+	lineGroup.selectAll("lowDot")
+		.data(lowLine)
+		.enter().append("circle")
+		.attr("class", "lowLine")
+		.attr("r", 2)
+		.attr("cx", function(d, i) { return xScale(i / guideDotsPerHr); } )
+		.attr("cy", function(d, i) { return yScale(d); } );
+
+	lineGroup.selectAll("highDot")
+		.data(highLine)
+		.enter().append("circle")
+		.attr("class", "highLine")
+		.attr("r", 2)
+		.attr("cx", function(d, i) { return xScale(i / guideDotsPerHr); } )
+		.attr("cy", function(d, i) { return yScale(d); } );
+
+	lineGroup.selectAll("maxLowDot")
+		.data(maxLowLine)
+		.enter().append("circle")
+		.attr("class", "maxLowLine")
+		.attr("r", 2)
+		.attr("cx", function(d, i) { return xScale(i / guideDotsPerHr); } )
+		.attr("cy", function(d, i) { return yScale(d); } );
+
+	lineGroup.selectAll("maxHighDot")
+		.data(maxHighLine)
+		.enter().append("circle")
+		.attr("class", "maxHighLine")
+		.attr("r", 2)
+		.attr("cx", function(d, i) { return xScale(i / guideDotsPerHr); } )
+		.attr("cy", function(d, i) { return yScale(d); } );
+
+	g.append("g")
+		.attr("class", "axis xAxis")
+		.attr("transform", "translate(0," + yScale(0) + ")")
+		.call(d3.axisBottom(xScale).ticks(25));
+
+	g.append("g")
+		.attr("class", "axis yAxis")
+		.call(d3.axisLeft(yScale).ticks(6));
+
+	function updateScreen(newValue) {
+	  document.getElementById("value").textContent=Math.round(newValue);
+	  document.getElementById("rawValue").textContent=newValue;
+	}
+   	
+	function tock() {
+		bs.tick();
+ 		updateScreen(bs.bloodSugar);
+		
+		console.log("Count = " + minuteCount);
+		console.log("  Data = " + data);
+
+		if (minuteCount == 5) {
+			data.push(Math.round(bs.bloodSugar));
+
+			console.log("bgCount = " + bgCount);
+			if (bgCount < n) {
+				bgCount += 1;
+			} else {
+				console.log("Shift!");
+				data.shift();
+			}
+			
+			var bgDot = g.selectAll(".bgDot")
+				.data(data);
+			var propValue;
+			console.log("bgDot...");
+			for(var propName in bgDot) {
+				propValue = bgDot[propName]
+				console.log(propName,propValue);
+			}
+
+			
+			var bgDotEnter = bgDot.enter();
+			var propValue;
+			console.log("Enter...");
+			for(var propName in bgDotEnter) {
+				propValue = bgDotEnter[propName]
+				console.log(propName,propValue);
+			}
+			bgDotEnter
+				.append("circle")
+				.attr("class", "bgDot")
+				.attr("r", 3)
+				.attr("cx", function(d, i) { return xScale(i / dotsPerHr); } )
+				.attr("cy", function(d, i) { return yScale(d); } );
+
+			var bgDotExit = bgDot.exit();
+			var propValue;
+			console.log("Exit...");
+			for(var propName in bgDotExit) {
+				propValue = bgDotExit[propName]
+				console.log(propName,propValue);
+			}
+			bgDotExit
+				.remove();
+			
+			// STOP EXECUTION
+			clearInterval(inter);
+			
+			minuteCount = 0;
+		} else {
+			minuteCount += 1;
+		}
+
+	} 
+
+	g.selectAll("bgDot")
+		.data(data)
+		.enter().append("circle")
+		.attr("class", "bgDot")
+		.attr("r", 3)
+		.attr("cx", function(d, i) { return xScale(i / dotsPerHr); } )
+		.attr("cy", function(d, i) { return yScale(d); } );
+	
+	var inter = setInterval(function() {
+					tock(); 
+				}, delay);
+	</script>
+</body>
+</html>

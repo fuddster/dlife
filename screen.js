@@ -2,8 +2,8 @@ var bs_screen = {
 	minuteCount:	1,
 	bgCount: 		0,
 //	delay: 			100, // speed things up for testing
-	delay:          500,
-//	delay: 			5000,
+//	delay:          500,
+	delay: 			5000,
 	paused: 		1, // Start paused
 	minTimer:		null, // Interval to pass time
 	goalTimer:		null, // Interval to check for success

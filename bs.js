@@ -266,6 +266,7 @@ function bs_addCarbs(carbs, when=0, msg=null, delay=5000) {
 	if (msg != null) {
 		alert(msg);
 	}
+	console.log('this is:' + this)
 	this.carbs = carbs;
 	this.carbDurationMins = 2 * this.carbs; // Duration is 2 minutes for every 1 carb (5 carbs = 10 min; 30 carbs = 1 hr; etc)
 	console.log('addCarbs:carbDelayCountDown = '+this.carbDelayCountDown);

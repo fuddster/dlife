@@ -1,0 +1,10 @@
+Things to fix:
+  - Carb adding in scenario 3 (carbs from timer)
+  - Delayed carbs applied dispite simulation being paused (scenario 3)
+  - EvalAbove and EvalBelow switched?  (test and fix)
+
+Thing to add:
+  - Different sugar types (quick, normal, fat based)
+  - Display I:C ratio on screen
+
+Ideas:

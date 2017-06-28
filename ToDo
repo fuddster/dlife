@@ -2,6 +2,7 @@ Things to fix:
   - Carb adding in scenario 3 (carbs from timer)
   - Delayed carbs applied dispite simulation being paused (scenario 3)
   - EvalAbove and EvalBelow switched?  (test and fix)
+  - Fix Negative Numbers when given too much insulin; don't let BG go below 0
 
 Thing to add:
   - Different sugar types (quick, normal, fat based)

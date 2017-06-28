@@ -1,0 +1,21 @@
+Things to fix:
+  - Carb adding in scenario 3 (carbs from timer)
+  - Delayed carbs applied dispite simulation being paused (scenario 3)
+  - EvalAbove and EvalBelow switched?  (test and fix)
+
+Thing to add:
+  - Different sugar types (quick, normal, fat based)
+  - Display I:C ratio on screen
+
+Ideas:
+  - Predictions (3 directions - one with insulin; carbs and combined; too much carbs middle line goes up; too little line goes down, etc)
+  - Side graph of insulin/carb impact
+  - Pull nightscout data
+    - Do simulations of current data
+    - Compare reality with simulation?
+  - Add basels
+  - Better completion congratulations
+  - Link together
+    - Either separate index page 
+    - Or in the congratulations message
+  - Allow customization of personal settings (isf/i:c/basels)

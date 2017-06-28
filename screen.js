@@ -221,7 +221,7 @@ var bs_screen = {
 			.attr("class", "icr")
 			.text("I:C Ratio - 1:"+bs.insulinToCarbRatio)
 			.attr("fill", "#f0f")
-			.attr("x", 420)
+			.attr("x", 470)
 			.attr("y", -80)
 			.attr("visibility", this.ICROn ? "visable" : "hidden");
 

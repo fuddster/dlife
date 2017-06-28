@@ -1,0 +1,68 @@
+.lowLine {
+	fill: #ff0;
+}
+
+.highLine {
+	fill: #ff0;
+}
+
+.maxLowLine { 
+	fill: #f00;
+}
+
+.maxHighLine {
+	fill: #f00;
+}
+
+.bgDot {
+	fill: #0f0;
+}
+
+.bgText {
+	//fill: #fff;
+	font-size: 100px;
+	font-family: serif;
+}
+
+.pauseButton {
+	font-size: 50px;
+	font-family: serif;
+}
+
+.startButton {
+	font-size: 50px;
+	font-family: serif;
+}
+
+.bolusButton {
+	font-size: 50px;
+	font-family: serif;
+}
+
+.eatButton {
+	font-size: 50px;
+	font-family: serif;
+}
+
+.isf {
+	font-size: 25px;
+	font-family: serif;
+}
+
+.success {
+	font-size: 50px;
+	font-family: serif;
+}
+
+svg {
+	background: #000;
+}
+
+.axis {
+	fill: none;
+	stroke: #fff;
+}
+
+.axis path {
+	stroke: #fff;
+}

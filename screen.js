@@ -34,6 +34,8 @@ var bs_screen = {
 	bolusButtonOn:	false,
 	carbButtonOn:	true,
 	ISFOn:			false,
+	ICROn:			false,
+
 
 	setup: function() {
 		console.log("Starting... D3 Version "+d3.version);
@@ -213,6 +215,15 @@ var bs_screen = {
 			.attr("x", 320)
 			.attr("y", -80)
 			.attr("visibility", this.ISFOn ? "visable" : "hidden");
+		
+		// Display Insulin:Carb Ratio
+		this.group.append("text")
+			.attr("class", "icr")
+			.text("I:C Ratio - 1:"+bs.insulinToCarbRatio)
+			.attr("fill", "#f0f")
+			.attr("x", 420)
+			.attr("y", -80)
+			.attr("visibility", this.ICROn ? "visable" : "hidden");
 
 	},
 
@@ -237,6 +248,13 @@ var bs_screen = {
 		this.group.select(".isf")
 			.attr("visibility", "visable");
 		this.ISFOn = true;
+	},
+	
+	displayICR: function() {
+		console.log("Turn on I:C Ratio display");
+		this.group.select(".icr")
+			.attr("visibility", "visable");
+		this.ICROn = true;
 	},
 
 	tock: function() {

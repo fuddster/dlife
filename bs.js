@@ -215,6 +215,11 @@ function bs_tick() {
 	this.bloodSugar += d;
 	this.bloodSugar += c;
 	
+	//Fix Negative Number Bug
+	if (this.bloodSugar < 0) { 
+		this.bloodSugar = 0;
+	}
+	
 	console.log('New BS = '+this.bloodSugar);
 }
 

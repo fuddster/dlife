@@ -19,24 +19,25 @@ function BloodSugar(initialValue) {
 	// Blood Sugar
 	this.bloodSugar = initialValue;
 
+	// Insulin Constants
+	// @todo switch to array so multiple dosing can be tracked
+	this.insulinDelay = 60; // How long before insulin starts impacting bs in minutes - Constant
+	this.insulinSensitivityFactor = 30; // 1:x - 1 unit of insulin brings down bs by x
+	this.insulinToCarbRatio = 10; //I:C Ratio set to 1:10
+	this.insulinDurationHrs = 3; // How long the insulin lasts in hrs
+	this.insulinDurationMins = this.insulinDurationHrs * 60;
+	this.insulinSineSum = 0;
+	this.sineInterval = 0;
+	
 	// Carb constants
 	this.carbs = 0; // grams of carbs
-	this.carbImpact = 2; // impact on bs per carb (i.e. 1 carb = +2 BS points)
+	this.carbImpact = this.insulinSensitivityFactor / this.insulinToCarbRatio; // impact on bs per carb (i.e. 1 carb = +3 BS points)
 	this.carbDelay = 5; // 5 minutes for quick sugar
 	this.carbDurationMins = 15; // 15 minutes for quick sugar
 	this.carbDelayCountDown = this.carbDelay;
 	this.carbImpactCountDown = this.carbDurationMins;
 	this.carbSineSum = 0;
 	this.carbSineInterval = 0;
-
-	// Insulin Constants
-	// @todo switch to array so multiple dosing can be tracked
-	this.insulinDelay = 60; // How long before insulin starts impacting bs in minutes - Constant
-	this.insulinSensitivityFactor = 30; // 1:x - 1 unit of insulin brings down bs by x
-	this.insulinDurationHrs = 3; // How long the insulin lasts in hrs
-	this.insulinDurationMins = this.insulinDurationHrs * 60;
-	this.insulinSineSum = 0;
-	this.sineInterval = 0;
 
 	// Insulin variables
 	this.insulinDelayCountDown = this.insulinDelay; // Count down to insulin inpact
@@ -214,6 +215,11 @@ function bs_tick() {
 	this.bloodSugar += i;
 	this.bloodSugar += d;
 	this.bloodSugar += c;
+	
+	//Fix Negative Number Bug
+	if (this.bloodSugar < 0) { 
+		this.bloodSugar = 0;
+	}
 	
 	console.log('New BS = '+this.bloodSugar);
 }

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
-    <script type="text/javascript" src="bs.js"></script>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="sweetalert.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="sweetalert.css">
+	<script type="text/javascript" src="bs.js"></script>
 	<link rel="stylesheet" type="text/css" href="bs.css" media="screen" />
 </head>
 <body>
@@ -11,11 +13,12 @@
 
 	<script type="text/javascript">
 		var bs = new BloodSugar(80);
-		alert("Bring your blood glucose level (BGL) to 100");
+		swal("Scenario #2", "Bring your blood glucose level (BGL) to 100");
+		//alert("Bring your blood glucose level (BGL) to 100");
 	</script>
 
 	<script type="text/javascript" src="goals.js"></script>
-    <script type="text/javascript" src="screen.js"></script>
+	<script type="text/javascript" src="screen.js"></script>
 
 	<script type="text/javascript">
 		bs_screen.setDelay(1000); 

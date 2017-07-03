@@ -63,7 +63,7 @@ var bs_screen = {
 			.domain([0, 260])
 			.range([this.height, 0]);
 	},
-	
+
 	setDelay: function(delay) {
 		this.delay = delay;
 	},
@@ -179,10 +179,11 @@ var bs_screen = {
 				var bolus = prompt("Bolus in units", 1);
 				if (bolus !== null) {
 					if ((bolus !== null) && !isNaN(parseFloat(bolus)) && isFinite(bolus)) {
-						bs.addInsulin(bolus); // Add 1 unit of insulin with a delay of 1 hr
-						alert("Bolusing "+bolus+" unit"+(bolus==1)?"":"s"+" of insulin");
+						bs.addInsulin(bolus); // Add 1 unit of insulin with a delay of 2 hr
+						var s = "Bolusing " + bolus + " unit" + ((bolus == 1) ? "" : "s") + " of insulin";
+						swal("Bolus", s, "info");
 					} else {
-						alert("That is not a number");
+						swal("Bolus", "That is not a number", "error");
 					}
 				}
 			} );
@@ -200,9 +201,12 @@ var bs_screen = {
 				if (c !== null) {
 					if ((c !== null) && !isNaN(parseFloat(c)) && isFinite(c)) {
 						bs.addCarbs(c); // Add 1 unit of insulin with a delay of 1 hr
-						alert(c+" carb"+(c==1)?"":"s"+" eaten");
+						var s = c + " carb" + ((c==1) ? "" : "s") + " eaten";
+						swal("Eat Carbohydrates", c);
+						//alert(c+" carb"+(c==1)?"":"s"+" eaten");
 					} else {
-						alert("That is not a number");
+						swal("Eat Carbohydrates", "That is not a number", "error");
+						//alert("That is not a number");
 					}
 				}
 			} );
@@ -215,7 +219,7 @@ var bs_screen = {
 			.attr("x", 320)
 			.attr("y", -80)
 			.attr("visibility", this.ISFOn ? "visable" : "hidden");
-		
+
 		// Display Insulin:Carb Ratio
 		this.group.append("text")
 			.attr("class", "icr")
@@ -249,7 +253,7 @@ var bs_screen = {
 			.attr("visibility", "visable");
 		this.ISFOn = true;
 	},
-	
+
 	displayICR: function() {
 		console.log("Turn on I:C Ratio display");
 		this.group.select(".icr")
@@ -278,7 +282,7 @@ var bs_screen = {
 				console.log("Shift!");
 				this.data.shift();
 			}
-			
+
 			var bgDot = this.group.selectAll(".bgDot")
 				.data(this.data)
 				.attr("r", 3)
@@ -327,7 +331,7 @@ var bs_screen = {
 			this.minuteCount += 1;
 		}
 	},
-	
+
 	stopTimers: function() {
 		clearInterval(this.minTimer);
 		clearInterval(this.goalTimer);

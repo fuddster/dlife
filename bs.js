@@ -1,3 +1,4 @@
+/* @flow */
 function BloodSugar(initialValue) { 
 	this.hasDrift = false;
 	this.hasExercise = false;
@@ -28,7 +29,7 @@ function BloodSugar(initialValue) {
 	this.insulinDurationMins = this.insulinDurationHrs * 60;
 	this.insulinSineSum = 0;
 	this.sineInterval = 0;
-	
+
 	// Carb constants
 	this.carbs = 0; // grams of carbs
 	this.carbImpact = this.insulinSensitivityFactor / this.insulinToCarbRatio; // impact on bs per carb (i.e. 1 carb = +3 BS points)
@@ -45,12 +46,12 @@ function BloodSugar(initialValue) {
 	this.insulinDoseCountDown = this.insulinDurationMins;
 	console.log('Init:InsulinDelayCountDown = '+this.insulinDelayCountDown);
 	this.insulin = 0;
-	
+
 	// Tick
 	this.tickValue = 1; // in minutes
 
 	this.eatTimer = null;
-	
+
 	this.view = view;
 	this.bs_tick = bs_tick;
 	this.addInsulin = bs_addInsulin;
@@ -78,7 +79,7 @@ function bs_turnOnExercise(exercise, exerciseDurationOfImpact) {
 	this.exercise = exercise;
 	this.exerciseDurationOfImpact = exerciseDurationOfImpact;
 }
-	
+
 function bs_turnOffExercise() {
 	this.hasExercise = false;
 	this.exercise = 0;
@@ -89,13 +90,13 @@ function bs_turnOnCarbs(carbs) {
 	this.hasCarbs = true;
 	this.carbs = carbs;
 }
-	
+
 function bs_turnOnCarbs(carbs, carbsImpact) {
 	this.hasCarbs = true;
 	this.carbs = carbs;
 	this.carbsImpact = carbsImpact;
 }
-	
+
 function bs_turnOffCarbs() {
 	this.hasCarbs = false;
 	this.carbs = 0;
@@ -127,7 +128,7 @@ function bs_turnOnDawnEffect(dawnEffect) {
 	this.hasDawnEffect = true;
 	this.dawnEffect = dawnEffect;
 }
-	
+
 function bs_turnOnDawnEffect(dawnEffect, dawnEffectStart, dawnEffectStop) {
 	this.hasDawnEffect = true;
 	this.dawnEffect = dawnEffect;
@@ -189,7 +190,7 @@ function bs_tick() {
 			// insulin effect = (insulin / insulinDurationMins) * insulinSensitivityFactor * -1
 			// i = (this.insulin * percentage) * this.insulinSensitivityFactor * -1;
 			//p = 1 / this.insulinDurationMins;
-			
+
 			// Calc #2 - Sine curve
 			// insulin effect = insulin * (Sin(insulinDoseCountDown) / insulinSineSum) * insulinSensitivityFactor * -1
 			p = Math.sin(this.carbImpactCountDown * this.carbSineInterval) / this.carbSineSum;
@@ -215,12 +216,12 @@ function bs_tick() {
 	this.bloodSugar += i;
 	this.bloodSugar += d;
 	this.bloodSugar += c;
-	
+
 	//Fix Negative Number Bug
 	if (this.bloodSugar < 0) { 
 		this.bloodSugar = 0;
 	}
-	
+
 	console.log('New BS = '+this.bloodSugar);
 }
 

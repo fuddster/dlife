@@ -16,14 +16,14 @@ var typeList = {
 
 function evalEquals(hist) {
 	var len = hist.length;
-	
+
 	console.log("evalEquals:len = "+len);
 	console.log("evalEquals:"+hist);
 
 	if (this.duration > len) { return false; }
 
 	var ret = true;
-	
+
 	for (var i = len; i > (len - this.duration); i--) {
 		console.log("evalEquals:hist["+(i-1)+"]("+hist[(i-1)]+") equals "+this.target+"?");
 		if (hist[(i-1)] != this.target) {
@@ -35,14 +35,14 @@ function evalEquals(hist) {
 
 function evalAbove(hist) {
 	var len = hist.length;
-	
+
 	console.log("evalAbove:len = "+len);
 	console.log("evalAbove:"+hist);
-	
+
 	if (this.duration > len) { return false }
-	
+
 	var ret = true;
-	
+
 	for (var i = len; i > (len - this.duration); i--) {
 		console.log("evalAbove:hist["+(i-1)+"]("+hist[i-1]+") equals "+this.target+"?");
 		if (hist[(i-1)] <= this.target) {
@@ -57,11 +57,11 @@ function evalBelow(hist) {
 	
 	console.log("evalBelow:len = "+len);
 	console.log("evalBelow:"+hist);
-	
+
 	if (this.duration > len) { return false }
-	
+
 	var ret = true;
-	
+
 	for (var i = len; i > (len - this.duration); i--) {
 		console.log("evalBelow:hist["+(i-1)+"]("+hist[i-1]+") equals "+this.target+"?");
 		if (hist[(i-1)] >= this.target) {
@@ -100,7 +100,7 @@ function Goal(name="noName", type=0, target=100, duration=1) {
 	} else if (type === 4) {
 		this.func = evalCarb;
 	}
-} 
+}
 
 function addGoal(name, type=0, target=100, duration=1) {
 	goals.push(new Goal(name, type, target, duration));

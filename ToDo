@@ -2,11 +2,11 @@ Things to fix:
   - Carb adding in scenario 3 (carbs from timer)
   - Delayed carbs applied dispite simulation being paused (scenario 3)
   - EvalAbove and EvalBelow switched?  (test and fix)
-  - Fix Negative Numbers when given too much insulin; don't let BG go below 0 (Fixed, SE + EE, 6/27/17)
+  x Fix Negative Numbers when given too much insulin; don't let BG go below 0 (Fixed, SE + EE, 6/27/17)
 
 Thing to add:
   - Different sugar types (quick, normal, fat based)
-  - Display I:C ratio on screen (Added, SE + EE, 6/27/17)
+  x Display I:C ratio on screen (Added, SE + EE, 6/27/17)
 
 Ideas:
   - Predictions (3 directions - one with insulin; carbs and combined; too much carbs middle line goes up; too little line goes down, etc)
@@ -20,3 +20,6 @@ Ideas:
     - Either separate index page 
     - Or in the congratulations message
   - Allow customization of personal settings (isf/i:c/basels)
+
+Scenarios to add:
+  - 

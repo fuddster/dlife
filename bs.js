@@ -1,5 +1,5 @@
 /* @flow */
-function BloodSugar(initialValue) { 
+function BloodSugar(initialValue) {
 	this.hasDrift = false;
 	this.hasExercise = false;
 	this.hasCarbs = false;
@@ -8,8 +8,17 @@ function BloodSugar(initialValue) {
 	this.hasDawnEffect = false;
 
 	this.maxDrift = 0; // max drift per hr
-	this.exercise = 0; // exercise impact per hr
+
+	// Exercise Constants
+	this.exercise = 0;
+	this.exerciseImpactDefault = 20; // exercise impact per hr for light exercise
+	this.exerciseDurationDefault = 30; // Default duration to 30 minutes
 	this.exerciseDurationOfImpact = 0; // hrs of exercise impact
+	this.exerciseIntensity = [ 1, 2, 4]; // Light (1x), Medium (2x), Strenuous (4x)
+	this.exerciseDelay = 10; // Delay before exercise impact start
+	this.exerciseDelayCountDown = this.exerciseDefault;
+	this.exerciseDurationCountDown = 0;
+
 	this.stress = 0; // impact of stress on bs
 	this.stressDurationOfImpact = 0; // hrs of stress impact
 	this.horomones = 0; // impact of homones per hr
@@ -77,6 +86,12 @@ function bs_turnOffDrift() {
 function bs_turnOnExercise(exercise, exerciseDurationOfImpact) {
 	this.hasExercise = true;
 	this.exercise = exercise;
+	this.exerciseDurationOfImpact = exerciseDurationOfImpact;
+}
+
+function bs_turnOnExerciseIntensity(exercise, exerciseDurantionOfImpact, exerciseIntensity) {
+	this.hasExercise = true;
+	this.exercise = exercise * this.exerciseIntensity[exerciseIntensity];
 	this.exerciseDurationOfImpact = exerciseDurationOfImpact;
 }
 
@@ -213,9 +228,27 @@ function bs_tick() {
 		console.log('drift = '+d);
 	}
 
+	// Exercise
+	var e = 0;
+	console.log("Exercise Delay Countdown = "+this.exerciseDelayCountDown);
+	console.log("Exercise Duration Countdown = "+this.exerciseDurationCountDown);
+	if ((this.exerciseDelayCountDown > 0) && (this.exerciseDurationCountDown > 0)) {
+		this.exerciseDelayCountDown += -1;
+	} else {
+		if (this.exerciseDurationCountDown > 0) {
+			console.log("Exercise = " + this.exercise);
+			console.log("Exercise duration = "+ this.exerciseDurationOfImpact);
+			e = this.exercise / this.exerciseDurationOfImpact;
+			e *= -1;
+			console.log("Exercise Impact (e) = "+e);
+			this.exerciseDurationCountDown -= 1;
+		}
+	}
+
 	this.bloodSugar += i;
 	this.bloodSugar += d;
 	this.bloodSugar += c;
+	this.bloodSugar += e;
 
 	//Fix Negative Number Bug
 	if (this.bloodSugar < 0) { 
@@ -240,6 +273,7 @@ function bs_addInsulin(units) {
 		this.insulinSineSum += Math.sin(i);
 	}
 	console.log("InsulinSineSum = "+this.insulinSineSum);
+	this.carbs = 0;
 }
 
 function bs_addInsulinWithDelay(units, delay) {
@@ -253,7 +287,7 @@ function bs_addInsulinWithDelay(units, delay) {
 	// Calculate Sine Sum
 	this.insulinSineSum = 0;
 	this.sineInterval = Math.PI / this.insulinDurationMins;
-	for (var i=0; i <= Math.PI; i += interval) {
+	for (var i=0; i <= Math.PI; i += this.sineInterval) {
 		var s = Math.sin(i);
 		this.insulinSineSum += Math.sin(i);
 	}
@@ -267,13 +301,14 @@ function bs_addCarbs(carbs, when=0, msg=null, delay=5000) {
 			console.log("addCarbs: when: "+when);
 			console.log("addCarbs: delay: "+delay);
 			console.log("addCarbs: del = "+del);
-			this.eatTimer = setTimeout(function(d) { bs_addCarbs(carbs, 0, msg); }, del);
+			console.log('this is:' + this.constructor.name)
+			this.eatTimer = setTimeout(function(d) { this.bs_addCarbs(carbs, 0, msg); }, del);
 			return;
 	}
 	if (msg != null) {
 		alert(msg);
 	}
-	console.log('this is:' + this)
+	console.log('this is:' + this.constructor.name)
 	this.carbs = carbs;
 	this.carbDurationMins = 2 * this.carbs; // Duration is 2 minutes for every 1 carb (5 carbs = 10 min; 30 carbs = 1 hr; etc)
 	console.log('addCarbs:carbDelayCountDown = '+this.carbDelayCountDown);
@@ -291,9 +326,24 @@ function bs_addCarbs(carbs, when=0, msg=null, delay=5000) {
 	console.log("carbSineSum = "+this.carbSineSum);
 }
 
+// Assume default time and default impact/hr
+function bs_addExercise(intensity) {
+	this.exerciseDelayCountDown = this.exerciseDelay;
+	this.exerciseDurationOfImpact = this.exerciseDurationDefault;
+	console.log("this.exercise = "+this.exercise);
+	console.log("this.exerciseImpactDefault = "+this.exerciseImpactDefault);
+	this.exercise = this.exerciseImpactDefault / (60 / this.exerciseDurationOfImpact);
+	this.exercise *= this.exerciseIntensity[intensity];
+	this.exerciseDurationCountDown = this.exerciseDurationOfImpact;
+	console.log("exercise = "+this.exercise);
+	console.log("delay count down = "+this.exerciseDelayCountDown);
+	console.log("duration count down = "+this.exerciseDurationCountDown);
+}
+
 BloodSugar.prototype.view=view;
 BloodSugar.prototype.tick=bs_tick;
 BloodSugar.prototype.addInsulin=bs_addInsulin;
 BloodSugar.prototype.addInsulinWithDelay=bs_addInsulinWithDelay;
 BloodSugar.prototype.addCarbs=bs_addCarbs;
+BloodSugar.prototype.addExercise=bs_addExercise;
 BloodSugar.prototype.turnOnDrift=bs_turnOnDrift;

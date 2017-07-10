@@ -1,3 +1,4 @@
+/* @flow */
 var bs_screen = {
 	minuteCount:	1,
 	bgCount: 		0,
@@ -192,7 +193,7 @@ var bs_screen = {
 		this.group.append("text")
 			.attr("class", "eatButton")
 			.text("Eat Carbs")
-			.attr("fill", "#00f")
+			.attr("fill", "#08f")
 			.attr("x", 300)
 			.attr("y", -30)
 			.attr("visibility", this.bolusButtonOn ? "visable" : "hidden")
@@ -265,8 +266,8 @@ var bs_screen = {
 		bs.tick();
 
 		console.log("Count = " + this.minuteCount);
-		console.log(" Data = " + this.data);
-		console.log(" Hist = " + this.histData);
+		console.log(" Data = " + this.data.toString());
+		console.log(" Hist = " + this.histData.toString());
 
 		if (this.minuteCount == this.interval) {
 			var b = Math.round(bs.bloodSugar);

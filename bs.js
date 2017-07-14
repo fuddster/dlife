@@ -89,7 +89,7 @@ function bs_turnOnExercise(exercise, exerciseDurationOfImpact) {
 	this.exerciseDurationOfImpact = exerciseDurationOfImpact;
 }
 
-function bs_turnOnExerciseIntensity(exercise, exerciseDurantionOfImpact, exerciseIntensity) {
+function bs_turnOnExerciseIntensity(exercise, exerciseDurationOfImpact, exerciseIntensity) {
 	this.hasExercise = true;
 	this.exercise = exercise * this.exerciseIntensity[exerciseIntensity];
 	this.exerciseDurationOfImpact = exerciseDurationOfImpact;

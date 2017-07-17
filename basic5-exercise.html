@@ -3,26 +3,25 @@
 <head>
 	<meta charset="utf-8">
 	<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="sweetalert.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="sweetalert.css">
 	<script type="text/javascript" src="bs.js"></script>
 	<link rel="stylesheet" type="text/css" href="bs.css" media="screen" />
+	<script type="text/javascript" src="goals.js"></script>
+	<script type="text/javascript" src="screen.js"></script>
 </head>
 <body>
 	<svg class="bgGraph" width="1200" height="600"></svg>
 
 	<script type="text/javascript">
 		var bs = new BloodSugar(150);
-		alert("Watch how 1/2 hour of exercise will impact BGLs");
+		var bs_screen = new Screen(bs, 500);
+		swal("Scenario #5 - Exercise!", "Watch how 1/2 hour of exercise will impact BGLs");
 	</script>
 
-	<script type="text/javascript" src="goals.js"></script>
-	<script type="text/javascript" src="screen.js"></script>
-
 	<script type="text/javascript">
-		//bs_screen.enableBolus(60); // Enable the bolus button with a delay of 60 minutes
-		//bs_screen.displayISF();
 		bs.addExercise(0);
 		addGoal("At140", 0, 140, 12); // At 140 for 12 duration
 		goalsList();
 	</script>
-
 </body>

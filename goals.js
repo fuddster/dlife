@@ -16,6 +16,7 @@ var typeList = {
 }
 
 function evalEquals(hist) {
+	console.log("evalEquals() - this = " + this.constructor.name);
 	var len = hist.length;
 
 	console.log("evalEquals:len = "+len);
@@ -35,6 +36,7 @@ function evalEquals(hist) {
 }
 
 function evalAbove(hist) {
+	console.log("evalAbove() - this = " + this.constructor.name);
 	var len = hist.length;
 
 	console.log("evalAbove:len = "+len);
@@ -54,6 +56,7 @@ function evalAbove(hist) {
 }
 
 function evalBelow(hist) {
+	console.log("evalBelow() - this = " + this.constructor.name);
 	var len = hist.length;
 	
 	console.log("evalBelow:len = "+len);
@@ -73,16 +76,20 @@ function evalBelow(hist) {
 }
 
 function evalBolus(hist) {
+	console.log("evalBolus() - this = " + this.constructor.name);
 }
 
 function evalCarb(hist) {
+	console.log("evalCarbs() - this = " + this.constructor.name);
 }
 
 function markComplete() {
+	console.log("markComplete() - this = " + this.constructor.name);
 	this.complete = true;
 }
 
 function Goal(name="noName", type=0, target=100, duration=1) {
+	console.log("Goal() - this = " + this.constructor.name);
 	this.name = name;
 	this.type = type;
 	this.target = target;
@@ -104,10 +111,12 @@ function Goal(name="noName", type=0, target=100, duration=1) {
 }
 
 function addGoal(name, type=0, target=100, duration=1) {
+	console.log("addGoal() - this = " + this.constructor.name);
 	goals.push(new Goal(name, type, target, duration));
 }
 
 function goalsComplete(hist) {
+	console.log("goalsComplete() - this = " + this.constructor.name);
 	for(var i=0; i < goals.length; i++) {
 		console.log("goal name = "+goals[i].name);
 		if (!goals[i].func(hist)) {
@@ -119,6 +128,7 @@ function goalsComplete(hist) {
 }
 
 function goalsList() {
+	console.log("goalsList() - this = " + this.constructor.name);
 	for(var i=0; i < goals.length; i++) {
 		console.log(goals[i]);
 	}

@@ -61,14 +61,14 @@ function BloodSugar(initialValue) {
 
 	this.eatTimer = null;
 
-	this.view = view;
+	this.view = bs_view;
 	this.bs_tick = bs_tick;
 	this.addInsulin = bs_addInsulin;
 	this.addInsulinWithDelay = bs_addInsulinWithDelay;
 	this.addCarbs = bs_addCarbs;
 }
 
-function view() {
+function bs_view() {
 	with (this) console.log('view:bs = '+bloodSugar);
 	console.log('InsulinDelayCountDown = '+this.insulinDelayCountDown);
 }
@@ -296,6 +296,7 @@ function bs_addInsulinWithDelay(units, delay) {
 
 function bs_addCarbs(carbs, when=0, msg=null, delay=5000) {
 	console.log("addCarbs: carbs = "+carbs+"  when: "+when+"  msg: "+msg);
+	console.log('this is:' + this.constructor.name)
 	if (when > 0) {
 			var del = when * delay;
 			console.log("addCarbs: when: "+when);
@@ -308,22 +309,21 @@ function bs_addCarbs(carbs, when=0, msg=null, delay=5000) {
 	if (msg != null) {
 		alert(msg);
 	}
-	console.log('this is:' + this.constructor.name)
-	this.carbs = carbs;
-	this.carbDurationMins = 2 * this.carbs; // Duration is 2 minutes for every 1 carb (5 carbs = 10 min; 30 carbs = 1 hr; etc)
-	console.log('addCarbs:carbDelayCountDown = '+this.carbDelayCountDown);
-	this.carbDelayCountDown = this.carbDelay;
-	console.log('addCarbs:carbDelayCountDown = '+this.carbDelayCountDown);
-	this.carbImpactCountDown = this.carbDurationMins;
+	bs.carbs = carbs;
+	bs.carbDurationMins = 2 * bs.carbs; // Duration is 2 minutes for every 1 carb (5 carbs = 10 min; 30 carbs = 1 hr; etc)
+	console.log('addCarbs:carbDelayCountDown = '+bs.carbDelayCountDown);
+	bs.carbDelayCountDown = bs.carbDelay;
+	console.log('addCarbs:carbDelayCountDown = '+bs.carbDelayCountDown);
+	bs.carbImpactCountDown = bs.carbDurationMins;
 
 	// Calculate Sine Sum
-	this.carbSineSum = 0;
-	this.carbSineInterval = Math.PI / this.carbDurationMins;
-	for (var i=0; i <= Math.PI; i += this.carbSineInterval) {
+	bs.carbSineSum = 0;
+	bs.carbSineInterval = Math.PI / bs.carbDurationMins;
+	for (var i=0; i <= Math.PI; i += bs.carbSineInterval) {
 		var s = Math.sin(i);
-		this.carbSineSum += Math.sin(i);
+		bs.carbSineSum += Math.sin(i);
 	}
-	console.log("carbSineSum = "+this.carbSineSum);
+	console.log("carbSineSum = "+bs.carbSineSum);
 }
 
 // Assume default time and default impact/hr
@@ -340,7 +340,7 @@ function bs_addExercise(intensity) {
 	console.log("duration count down = "+this.exerciseDurationCountDown);
 }
 
-BloodSugar.prototype.view=view;
+BloodSugar.prototype.view=bs_view;
 BloodSugar.prototype.tick=bs_tick;
 BloodSugar.prototype.addInsulin=bs_addInsulin;
 BloodSugar.prototype.addInsulinWithDelay=bs_addInsulinWithDelay;

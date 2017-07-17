@@ -7,26 +7,21 @@
 	<link rel="stylesheet" type="text/css" href="sweetalert.css">
 	<script type="text/javascript" src="bs.js"></script>
 	<link rel="stylesheet" type="text/css" href="bs.css" media="screen" />
+	<script type="text/javascript" src="goals.js"></script>
+	<script type="text/javascript" src="screen.js"></script>
 </head>
 <body>
 	<svg class="bgGraph" width="1200" height="600"></svg>
 
 	<script type="text/javascript">
-		var bs = new BloodSugar(80);
+		var bs = new BloodSugar(70);
+		var bs_screen = new Screen(bs, 500);
+
 		swal("Scenario #2", "Bring your blood glucose level (BGL) to 100");
-		//alert("Bring your blood glucose level (BGL) to 100");
-	</script>
 
-	<script type="text/javascript" src="goals.js"></script>
-	<script type="text/javascript" src="screen.js"></script>
-
-	<script type="text/javascript">
 		bs_screen.setDelay(1000); 
 		bs_screen.enableEating();
 		bs_screen.displayICR();
 		addGoal("At100", 0, 100, 3); // Equals 100 for 1 duration
-		//bs_screen.setSuccessSteadyAt(100);
-		//bs_screen.displayCarbImpact();
 	</script>
-
 </body>

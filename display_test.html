@@ -7,20 +7,20 @@
 	<link rel="stylesheet" type="text/css" href="sweetalert.css">
 	<script type="text/javascript" src="bs.js"></script>
 	<link rel="stylesheet" type="text/css" href="bs.css" media="screen" />
+	<script type="text/javascript" src="goals.js"></script>
+	<script type="text/javascript" src="screen.js"></script>
 </head>
 <body>
 	<svg class="bgGraph" width="1200" height="600"></svg>
 
 	<script type="text/javascript">
 		var bs = new BloodSugar(130);
+		var bs_screen = new Screen(bs, 500);
+
 		swal("Display Test", "Test display elements");
-	</script>
 
-	<script type="text/javascript" src="goals.js"></script>
-	<script type="text/javascript" src="screen.js"></script>
-
-	<script type="text/javascript">
 		bs_screen.enableBolus(60); // Enable the bolus button with a delay of 60 minutes
+
 		bs_screen.enableEating();
 		bs_screen.displayISF();
 		bs_screen.displayICR();

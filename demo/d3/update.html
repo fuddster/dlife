@@ -5,7 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" user-scalable="no">
 		<title>D3 Example: Selections and Data Joins</title>
-			
+
 		<style type="text/css">
 
 			#data-field {
@@ -42,16 +42,16 @@
 			// Updates the visualization 
 			function update() {
 
-			  // Update selection: Resize and position existing 
-			  // DOM elements with data bound to them.
-			  var selection = d3.select("#chart")
-			    .selectAll(".bar").data(numbers)
-			    .style("height", function(d){ 
-			      return d; 
-			    })
-			    .style("margin-top", function(d){ 
-			      return 100 - d; 
-			    });
+				// Update selection: Resize and position existing 
+				// DOM elements with data bound to them.
+				var selection = d3.select("#chart")
+					.selectAll(".bar").data(numbers)
+					.style("height", function(d){
+						return d;
+					})
+					.style("margin-top", function(d){
+						return 100 - d; 
+					});
 
 			  // Enter selection: Create new DOM elements for added 
 			  // data items, resize and position them and attach a 

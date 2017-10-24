@@ -27,7 +27,7 @@ jobs:
           command: npm test
       - run:
           name: code-coverage
-          command:  nyc npm test
+          command: './node_modules/.bin/nyc npm test'
       - store_artifacts:
           path: test-results.xml
           prefix: tests

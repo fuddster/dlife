@@ -3,11 +3,7 @@
 	"devDependencies": {
 		"jshint": "^2.9.5",
 		"mocha": "latest",
-<<<<<<< HEAD
 		"nyc": "^11.2.1",
-=======
-		"nyc": "^6.4.4",
->>>>>>> refs/remotes/origin/master
 		"sweetalert": "latest"
 	},
 	"scripts": {

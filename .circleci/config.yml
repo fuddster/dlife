@@ -4,6 +4,7 @@ jobs:
     working_directory: ~/dlife
     docker:
       - image: circleci/node:4.8.2
+      - image: mongo:3.4.4
     steps:
       - checkout
       - run:
@@ -11,6 +12,9 @@ jobs:
           command: 'sudo npm install -g npm@latest'
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install-nyc
+          command: npm i nyc
       - run:
           name: install-npm-wee
           command: npm install
@@ -23,7 +27,7 @@ jobs:
           command: npm test
       - run:
           name: code-coverage
-          command: './node_modules/.bin/nyc report --reporter=text-lcov'
+          command: './node_modules/.bin/nyc npm test'
       - store_artifacts:
           path: test-results.xml
           prefix: tests

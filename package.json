@@ -1,0 +1,13 @@
+{
+	"name": "dlife",
+	"devDependencies": {
+		"jshint": "^2.9.5",
+		"mocha": "latest",
+		"sweetalert": "latest"
+	},
+	"scripts": {
+		"lint": "jshint lib/**.js",
+		"test": "mocha test/",
+		"env": "env"
+	}
+}

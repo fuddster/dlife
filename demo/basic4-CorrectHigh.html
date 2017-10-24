@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="../lib/sweetalert.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
+	<script type="text/javascript" src="../lib/bs.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/bs.css" media="screen" />
+	<script type="text/javascript" src="../lib/goals.js"></script>
+	<script type="text/javascript" src="../lib/screen.js"></script>
+</head>
+<body>
+	<svg class="bgGraph" width="1200" height="600"></svg>
+
+	<script type="text/javascript">
+		var bs = new BloodSugar(300);
+		var bs_screen = new Screen(bs, 500);
+		swal("Scenario #4 - Correct a High", "Bring your blood glucose level (BGL) between 80-120");
+		//alert("Bring your blood glucose level (BGL) between 80-120");
+	</script>
+
+	<script type="text/javascript">
+		bs_screen.enableBolus(60); // Enable the bolus button with a delay of 60 minutes
+		bs_screen.displayISF();
+		addGoal("Below120", 2, 120, 12); // Below 120 for 12 duration
+		addGoal("Above80", 1, 80, 12); //Above 80 for 12 duration
+		goalsList();
+	</script>
+</body>

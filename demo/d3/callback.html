@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <script type="text/javascript" src="http://d3js.org/d3.v4.min.js"></script>
-    <script type="text/javascript" src="bs.js"></script>
-    <style>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="http://d3js.org/d3.v4.min.js"></script>
+	<script type="text/javascript" src="bs.js"></script>
+	<style>
+
 .line {
 	fill: none;
 	stroke: #000;
 	stroke-width: 1.5px;
 }
-    </style>
+
+	</style>
 </head>
 <body>
-    <p>The value is: <span id="value">0</span> (<span id="rawValue">0</span>)</p>
+	<p>The value is: <span id="value">0</span> (<span id="rawValue">0</span>)</p>
 
 	<svg width="960" height="500"></svg>
 
-    <script type="text/javascript">
+	<script type="text/javascript">
 
 	console.log("Starting... D3 Version "+d3.version);
 
@@ -36,12 +38,12 @@
 	console.log('update interval is '+updateIntervalMS);
 
 	function updateScreen(newValue) {
-	  document.getElementById("value").textContent=Math.round(newValue);
-	  document.getElementById("rawValue").textContent=newValue;
+		document.getElementById("value").textContent=Math.round(newValue);
+		document.getElementById("rawValue").textContent=newValue;
 	}
-    
+
 	function updateValue() {
-        bs.tick();
+		bs.tick();
 		//value = value + driftPerInterval;
 		//var intValue = Math.round(value);
  		console.log("New value is " + bs.bloodSugar);
@@ -51,27 +53,27 @@
 	}
 
 	console.log("calling updateValue()");
-	
+
 //	updateValue();
-	
+
 	var n = 40,
 		random = d3.randomNormal(0, .2),
 		data = d3.range(n).map(function(d) { return 0 });
-		
+
 	var svg = d3.select("svg"),
 		margin = {top: 20, right: 20, bottom: 20, left: 40},
 		width = +svg.attr("width") - margin.left - margin.right,
 		height = +svg.attr("height") - margin.top - margin.bottom,
 		g = svg.append("g").attr("tranform", "translate(" + margin.left + "," + margin.top + ")");
-		
+
 	var x = d3.scaleLinear()
 		.domain([0, n - 1])
 		.range([0, width]);
-		
+
 	var y = d3.scaleLinear()
 		.domain([0, 250])
 		.range([height, 0]);
-		
+
 	var line = d3.line()
 		.x(function(d, i) { return x(i); })
 		.y(function(d, i) { return y(d); });
@@ -87,11 +89,11 @@
 		.attr("class", "axis axis--x")
 		.attr("transform", "translate(0," + y(0) + ")")
 		.call(d3.axisBottom(x));
-		
+
 	g.append("g")
 		.attr("class", "axis axis--y")
 		.call(d3.axisLeft(y));
-		
+
 	g.append("path")
 		.datum(data)
 		.attr("class", "line")
@@ -107,16 +109,16 @@
 		.attr("r", 3.5)
 		.attr("cx", function(d, i) { return x(i); } )
 		.attr("cy", function(d, i) { return y(d); } );
-		
+
 	function tock() {
 		updateValue();
-		
+
 		console.log("Count = " + count);
 		if (count == 5) {
 			data.push(bs.bloodSugar);
-		
+
 			data.shift();
-		
+
 			count = 0;
 		} else {
 			count += 1;
@@ -133,8 +135,8 @@
 			.attr("d", line)
 			.transition()
 			.on("start", tock);
-	} 
-		
+	}
+
 	</script>
 </body>
 </html>

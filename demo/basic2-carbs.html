@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
-	<script src="../lib/sweetalert.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
 	<script type="text/javascript" src="../lib/bs.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/bs.css" media="screen" />
@@ -19,7 +19,7 @@
 
 		swal("Scenario #2", "Bring your blood glucose level (BGL) to 100");
 
-		bs_screen.setDelay(1000); 
+		bs_screen.setDelay(1000);
 		bs_screen.enableEating();
 		bs_screen.displayICR();
 		addGoal("At100", 0, 100, 3); // Equals 100 for 1 duration

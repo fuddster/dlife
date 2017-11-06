@@ -3,6 +3,7 @@
 	"devDependencies": {
 		"jshint": "^2.9.5",
 		"mocha": "latest",
+		"nyc": "^11.2.1",
 		"sweetalert": "latest"
 	},
 	"scripts": {

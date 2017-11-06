@@ -1,1 +1,6 @@
 .flowconfig
+node_modules
+.nyc_output
+coverage
+.eslintrc.js
+package-lock.json

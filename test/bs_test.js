@@ -6,11 +6,11 @@ var BloodSugar = require('../lib/bs.js');
 describe('bs.js', function() {
   describe('BloodSugar', function() {
     describe('Test Constructor', function() {
-
       var bs = new BloodSugar(123);
 
       it('should have no insulin on board', function() {
         assert.equal(0, bs.insulin);
+        assert.equal(0, bs.insulinSineSum);
       });
 
       it('should have a blood sugar of 123', function() {
@@ -43,7 +43,6 @@ describe('bs.js', function() {
     });
 
     describe('Test Drift Toggle', function() {
-
       it('Default Values', function() {
         var bs = new BloodSugar(123);
         assert.equal(false, bs.hasDrift);
@@ -52,7 +51,7 @@ describe('bs.js', function() {
 
       it('Turn on drift', function() {
         var bs = new BloodSugar(123);
-        let md = 5;
+        var md = 5;
         bs.turnOnDrift(md);
         assert.equal(true, bs.hasDrift);
         assert.equal(md, bs.maxDrift);
@@ -68,15 +67,14 @@ describe('bs.js', function() {
     });
 
     describe('Test Exercise Toggle', function() {
-
-      let exercise = 20;  // decrease 20 points per hour
-      let doi = 3; // Exercise duration of impact - 3 hours
+      var exercise = 20; // decrease 20 points per hour
+      var doi = 3; // Exercise duration of impact - 3 hours
 
       it('Default Values', function() {
         var bs = new BloodSugar(123);
         assert.equal(false, bs.hasExercise);
         assert.equal(0, bs.exercise);
-        assert.equal(0, bs.exerciseDurationOfImpact)
+        assert.equal(0, bs.exerciseDurationOfImpact);
       });
 
       it('Turn on exercise', function() {
@@ -127,7 +125,6 @@ describe('bs.js', function() {
     });
 
     describe('Test Carbs Toggle', function() {
-
       it('Default Values', function() {
         var bs = new BloodSugar(123);
         assert.equal(false, bs.hasCarbs);
@@ -136,8 +133,8 @@ describe('bs.js', function() {
 
       it('Turn on carbs', function() {
         var bs = new BloodSugar(123);
-        let ci = bs.carbImpact;
-        let carbs = 20;
+        var ci = bs.carbImpact;
+        var carbs = 20;
         bs.turnOnCarbs(carbs);
         assert.equal(true, bs.hasCarbs);
         assert.equal(carbs, bs.carbs);
@@ -147,9 +144,8 @@ describe('bs.js', function() {
 
       it('Turn on carbs with impact', function() {
         var bs = new BloodSugar(123);
-        let ci = bs.carbImpact;
-        let nci = 1000;
-        let carbs = 20;
+        var nci = 1000;
+        var carbs = 20;
         bs.turnOnCarbsWithImpact(carbs, nci);
         assert.equal(true, bs.hasCarbs);
         assert.equal(carbs, bs.carbs);
@@ -157,8 +153,8 @@ describe('bs.js', function() {
       });
 
       it('Turn off carbs', function() {
-        let bs = new BloodSugar(123);
-        let ci = bs.carbImpact;
+        var bs = new BloodSugar(123);
+        var ci = bs.carbImpact;
         bs.turnOnCarbs(20);
         bs.turnOffCarbs();
         assert.equal(false, bs.hasCarbs);
@@ -167,8 +163,8 @@ describe('bs.js', function() {
       });
 
       it('Turn off carbs with impact', function() {
-        let bs = new BloodSugar(123);
-        let ci = bs.carbImpact;
+        var bs = new BloodSugar(123);
+        var ci = bs.carbImpact;
         bs.turnOnCarbs(20, 10000);
         bs.turnOffCarbs();
         assert.equal(false, bs.hasCarbs);
@@ -178,7 +174,6 @@ describe('bs.js', function() {
     });
 
     describe('Test Stress Toggle', function() {
-
       it('Default Values', function() {
         var bs = new BloodSugar(123);
         assert.equal(false, bs.hasStress);
@@ -204,5 +199,93 @@ describe('bs.js', function() {
       });
     });
 
+    describe('Test Hormone Toggle', function() {
+      it('Default Values', function() {
+        var bs = new BloodSugar(123);
+        assert.equal(false, bs.hasHormones);
+        assert.equal(0, bs.hormones);
+      });
+
+      it('Turn on hormones', function() {
+        var bs = new BloodSugar(123);
+        bs.turnOnHormones(30);
+        assert.equal(true, bs.hasHormones);
+        assert.equal(30, bs.hormones);
+      });
+
+      it('Turn off hormones', function() {
+        var bs = new BloodSugar(123);
+        bs.turnOnHormones(30);
+        bs.turnOffHormones();
+        assert.equal(false, bs.hasHormones);
+        assert.equal(0, bs.hormones);
+      });
+    });
+
+    describe('Test Dawn Effect Toggle', function() {
+      it('Default Values', function() {
+        var bs = new BloodSugar(123);
+        assert.equal(false, bs.hasDawnEffect);
+        assert.equal(0, bs.dawnEffect);
+        assert.equal(3, bs.dawnEffectStart); // Starts at 3am
+        assert.equal(6, bs.dawnEffectStop); // Stops at 6am
+      });
+
+      it('Turn on dawn effect', function() {
+        var bs = new BloodSugar(123);
+        bs.turnOnDawnEffect(25);
+        assert.equal(true, bs.hasDawnEffect);
+        assert.equal(25, bs.dawnEffect);
+        assert.equal(3, bs.dawnEffectStart);
+        assert.equal(6, bs.dawnEffectStop);
+      });
+
+      it('Turn on dawn effect with timeframe', function() {
+        var bs = new BloodSugar(123);
+        bs.turnOnDawnEffectWithTime(25, 2, 5);
+        assert.equal(true, bs.hasDawnEffect);
+        assert.equal(25, bs.dawnEffect);
+        assert.equal(2, bs.dawnEffectStart);
+        assert.equal(5, bs.dawnEffectStop);
+      });
+
+      it('Turn off dawn effect', function() {
+        var bs = new BloodSugar(123);
+        bs.turnOnDawnEffect(25);
+        bs.turnOffDawnEffect();
+        assert.equal(false, bs.hasDawnEffect);
+        assert.equal(0, bs.dawnEffect);
+        assert.equal(3, bs.dawnEffectStart); // Starts at 3am
+        assert.equal(6, bs.dawnEffectStop); // Stops at 6am
+      });
+    });
+
+    describe('Add Insulin', function() {
+      var bs = new BloodSugar(123);
+      it('Add insulin function', function() {
+        bs.addInsulin(1);
+        assert.equal(1, bs.insulin);
+        assert.equal(60, bs.insulinDelay);
+        assert.equal(3, bs.insulinDurationHrs);
+        assert.equal(180, bs.insulinDurationMins);
+        assert.notEqual(0, bs.insulinSineSum);
+        assert.notEqual(0, bs.insulinDelayCountDown);
+        assert.notEqual(0, bs.insulinDoseCountDown);
+      });
+    });
+
+    describe('Add Insulin with Delay', function() {
+      var bs = new BloodSugar(123);
+      it('Add insulin function with delay', function() {
+        bs.addInsulinWithDelay(2, 45);
+        assert.equal(2, bs.insulin);
+        assert.equal(45, bs.insulinDelay);
+        assert.equal(3, bs.insulinDurationHrs);
+        assert.equal(180, bs.insulinDurationMins);
+        assert.notEqual(0, bs.insulinSineSum);
+        assert.notEqual(0, bs.insulinDelayCountDown);
+        assert.notEqual(0, bs.insulinDoseCountDown);
+      });
+    });
   });
 });

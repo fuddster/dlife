@@ -8,8 +8,6 @@ describe('GoalList - goalList.js', function() {
   describe('Test Constructor', function() {
     it('Default Values', function() {
       var gl = new GoalList();
-      console.log(gl);
-      console.log(gl.goals);
       assert.equal(0, gl.goals.length);
     });
     it('addGoal', function() {

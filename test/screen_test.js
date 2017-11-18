@@ -12,7 +12,7 @@ describe('GoalList - goalList.js', function() {
     this.jsdom = require('jsdom-global')();
     var body = document.getElementsByTagName('body')[0];
     body.innerHTML = svg;
-    console.log('doc = ' + document.getElementsByTagName('html')[0].outerHTML);
+    console.log('before doc = ' + document.getElementsByTagName('html')[0].outerHTML);
   });
 
   after(function() {
@@ -63,17 +63,15 @@ describe('GoalList - goalList.js', function() {
 
   describe('Draw', function() {
     it('test that drawing is done', function() {
-      var t = ['lowLine', 'highLine', 'maxLowLine', 'maxHighLine', 'badClass'];
-
-      t.forEach(function(e) {
-        var h = document.body.getElementByClassName(e)[0];
+      var elements = ['lowLine', 'highLine', 'maxLowLine', 'maxHighLine'];
+      var idx;
+      for (idx = 0; idx < elements.length; ++idx) {
+        var e = elements[idx];
+        var h = document.getElementsByClassName(e)[0];
         assert(h, 'element: ' + e + ' missing');
-      });
-      var lowline = document.body.getElementsByClassName('lowLine')[0];
+      }
+      var lowline = document.getElementsByClassName('lowLine')[0];
       assert(lowline);
-      console.log('lowLine = ' + lowline.outerHTML);
-      // var body = document.getElementsByTagName('body')[0];
-      console.log('doc = ' + document.getElementsByTagName('html')[0].outerHTML);
     });
   });
 });

@@ -6,16 +6,12 @@
   "scripts": {
     "commit": "git-cz",
     "prebuild": "rimraf dist",
-    "build": "npm-run-all --parallel build:*",
-    "build:main": "babel --copy-files --out-dir dist --ignore *.test.js src",
-    "build:umd": "webpack --output-filename index.umd.js",
-    "build:umd.min": "webpack --output-filename index.umd.min.js -p",
-    "test": "cross-env NODE_ENV=test nyc mocha",
+    "test": "nyc mocha",
+    "testhtml": "nyc --reporter=html --reporter=text mocha",
     "watch:test": "mocha --watch",
     "lint": "eslint lib",
     "flow": "flow",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
-    "release": "semantic-release pre && npm publish && semantic-release post",
     "validate": "npm-run-all --parallel test lint"
   },
   "repository": {
@@ -40,39 +36,33 @@
   },
   "homepage": "https://github.com/fuddster/dlife#readme",
   "dependencies": {
+    "npm-check-updates": "^2.13.0",
     "unique-random-array": "1.0.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.11.4",
-    "babel-loader": "6.2.4",
-    "babel-plugin-istanbul": "^1.0.3",
-    "babel-preset-es2015": "6.9.0",
-    "babel-preset-flow": "^6.23.0",
-    "babel-register": "^6.11.6",
-    "chai": "3.5.0",
-    "codecov": "1.0.1",
-    "commitizen": "2.8.2",
-    "cross-env": "^2.0.0",
-    "cz-conventional-changelog": "1.1.6",
+    "babel-plugin-istanbul": "^4.1.5",
+    "chai": "4.1.2",
+    "codecov": "3.0.0",
+    "commitizen": "2.9.6",
     "d3": "^4.11.0",
     "dom-parser": "^0.1.5",
-    "eslint": "^4.1.1",
+    "eslint": "^4.11.0",
     "eslint-config-google": "^0.9.1",
     "flow-bin": "^0.59.0",
-    "ghooks": "1.3.2",
+    "ghooks": "2.0.0",
     "jsdom": "11.3.0",
     "jsdom-global": "3.0.2",
-    "json-loader": "0.5.4",
-    "mocha": "^3.0.0",
+    "json-loader": "0.5.7",
+    "mocha": "^4.0.1",
     "mocha-jsdom": "^1.1.0",
-    "npm-run-all": "^2.3.0",
-    "nyc": "7.1.0",
-    "opt-cli": "1.5.1",
-    "rimraf": "2.5.4",
-    "semantic-release": "4.3.5",
+    "npm-run-all": "^4.1.2",
+    "nyc": "^11.3.0",
+    "opt-cli": "1.6.0",
+    "rimraf": "2.6.2",
+    "semantic-release": "8.2.0",
     "sweetalert": "^2.0.8",
-    "validate-commit-msg": "2.6.1",
-    "webpack": "1.13.1"
+    "validate-commit-msg": "2.14.0",
+    "webpack": "3.8.1"
   },
   "nyc": {
     "all": true,
@@ -89,30 +79,6 @@
       "lib"
     ],
     "sourceMap": false,
-    "instrument": false,
-    "require": [
-      "babel-register"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "es2015"
-    ],
-    "env": {
-      "test": {
-        "plugins": [
-          "istanbul"
-        ]
-      }
-    }
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    },
-    "ghooks": {
-      "pre-commit": "opt --in pre-commit --exec \"npm run validate\"",
-      "commit-msg": "opt --in commit-msg --exec \"validate-commit-msg\""
-    }
+    "instrument": false
   }
 }

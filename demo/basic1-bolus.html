@@ -16,13 +16,13 @@
 
   <script type="text/javascript">
     var bs = new BloodSugar(130);
-    var bs_screen = new Screen(bs, 500);
+    var screen = new Screen(bs, 500);
     var gl = new GoalList();
 
     swal("Scenario #1 - Bolus", "Bring your blood glucose level (BGL) to 100");
 
-    bs_screen.enableBolus(60); // Enable the bolus button with a delay of 60 minutes
-    bs_screen.displayISF();
+    screen.enableBolus(60); // Enable the bolus button with a delay of 60 minutes
+    screen.displayISF();
     gl.addGoal(new Goal("At100", 0, 100, 3)); // Equals 100 for 1 duration
     gl.goalsList();
   </script>

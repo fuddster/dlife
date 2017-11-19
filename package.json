@@ -50,8 +50,8 @@
     "eslint-config-google": "^0.9.1",
     "flow-bin": "^0.59.0",
     "ghooks": "2.0.0",
-    "jsdom": "11.3.0",
-    "jsdom-global": "3.0.2",
+    "jsdom": "^11.3.0",
+    "jsdom-global": "^3.0.2",
     "json-loader": "0.5.7",
     "mocha": "^4.0.1",
     "mocha-jsdom": "^1.1.0",
@@ -67,10 +67,10 @@
   "nyc": {
     "all": true,
     "check-coverage": true,
-    "branches": 20,
-    "function": 30,
-    "lines": 30,
-    "statements": 30,
+    "branches": 30,
+    "function": 60,
+    "lines": 50,
+    "statements": 50,
     "reporter": [
       "text",
       "lcov"
@@ -78,7 +78,6 @@
     "include": [
       "lib"
     ],
-    "sourceMap": false,
-    "instrument": false
+    "sourceMap": false
   }
 }

@@ -3,13 +3,10 @@ jobs:
   build:
     working_directory: ~/dlife
     docker:
-      - image: circleci/node:6.12.0
+      - image: circleci/node:8.9.1
       - image: mongo:3.4.4
     steps:
       - checkout
-      - run:
-          name: update-npm
-          command: 'sudo npm install -g npm@latest'
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:

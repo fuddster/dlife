@@ -15,17 +15,15 @@
   <svg class="bgGraph" width="1200" height="600"></svg>
 
   <script type="text/javascript">
-    var bs = new BloodSugar(130);
+    var bs = new BloodSugar(100);
     var gl = new GoalList();
-    var screen = new Screen(bs, gl, 200);
+    var screen = new Screen(bs, gl, 100);
 
-    swal("Display Test", "Test display elements");
+    var drift = 60
+    swal("Drift Test", "Watch how a drift of " + drift + " pts per hour impacts a blood glucose reading");
+    bs.turnOnDrift(drift);
 
-    screen.enableBolus(60); // Enable the bolus button with a delay of 60 minutes
-
-    screen.enableEating();
-    screen.displayISF();
-    screen.displayICR();
+    gl.addGoal(new Goal("At200", 0, 200, 3)); // Equals 100 for 1 duration
     screen.displayDelay();
   </script>
 

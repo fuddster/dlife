@@ -4,13 +4,16 @@ Things to fix:
   - EvalAbove and EvalBelow switched?  (test and fix)
   x Fix Negative Numbers when given too much insulin; don't let BG go below 0 (Fixed, SE + EE, 6/27/17)
   - setDelay doesn't work (See bolus2-carbs.html)
+  - drift seems too small (see drift_test.html) -  set at 60 only drifts one per 5 ticks, should be (0-5 per tick)
+  - check other functions for empty parameters and throw errors or set default and print warning (model addcarbsWithImpact())
 
 Things to add:
   - Different sugar types (quick, normal, fat based)
   x Display I:C ratio on screen (Added, SE + EE, 6/27/17)
   - New goals
-  		- Not Above - Fail if you go above x
-		- Not Below - Fail if you go below x
+      - Not Above - Fail if you go above x
+    - Not Below - Fail if you go below x
+  - Display drift value Toggle
 
 Ideas:
   - Predictions (3 directions - one with insulin; carbs and combined; too much carbs middle line goes up; too little line goes down, etc)
@@ -21,9 +24,9 @@ Ideas:
   - Add basels
   - Better completion congratulations
   - Link together
-    - Either separate index page 
+    - Either separate index page
     - Or in the congratulations message
   - Allow customization of personal settings (isf/i:c/basels)
 
 Scenarios to add:
-  - 
+  -

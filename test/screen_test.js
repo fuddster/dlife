@@ -7,7 +7,8 @@ var GoalList = require('../lib/goalList.js');
 var d3 = require('d3');
 var svg = '<svg class="bgGraph" width="1200" height="600"></svg>';
 
-describe('GoalList - goalList.js', function() {
+describe('Screen - screen.js', function() {
+  this.timeout(5000);
   before(function() {
     this.jsdom = require('jsdom-global')();
     var body = document.getElementsByTagName('body')[0];

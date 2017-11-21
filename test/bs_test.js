@@ -63,6 +63,20 @@ describe('BloodSugar - bs.js', function() {
       assert.equal(false, bs.hasDrift);
       assert.equal(0, bs.maxDrift);
     });
+
+    it('Drift with no parameter', function() {
+      var bs = new BloodSugar(123);
+      bs.turnOnDrift();
+      assert.equal(true, bs.hasDrift);
+      assert.equal(0, bs.maxDrift);
+    });
+
+    it('Turn on Drift but pass in zero', function() {
+      var bs = new BloodSugar(123);
+      bs.turnOnDrift(0);
+      assert.equal(true, bs.hasDrift);
+      assert.equal(0, bs.maxDrift);
+    });
   });
 
   describe('Test Exercise Toggle', function() {
@@ -141,6 +155,16 @@ describe('BloodSugar - bs.js', function() {
       assert.equal(ci, bs.carbImpact);
     });
 
+    it('Turn on carbs with no parameter', function() {
+      var bs = new BloodSugar(123);
+      var ci = bs.carbImpact;
+      bs.turnOnCarbs();
+      assert.equal(true, bs.hasCarbs);
+      assert.equal(0, bs.carbs);
+      // carbImpact should not be changed
+      assert.equal(ci, bs.carbImpact);
+    });
+
     it('Turn on carbs with impact', function() {
       var bs = new BloodSugar(123);
       var nci = 1000;
@@ -149,6 +173,20 @@ describe('BloodSugar - bs.js', function() {
       assert.equal(true, bs.hasCarbs);
       assert.equal(carbs, bs.carbs);
       assert.equal(nci, bs.carbImpact);
+    });
+
+    it('Turn on carbs with impact with no parameters', function() {
+      var bs = new BloodSugar(123);
+      var carbs = 20;
+      bs.turnOnCarbsWithImpact(carbs);
+      assert.equal(true, bs.hasCarbs);
+      assert.equal(carbs, bs.carbs);
+      assert.equal(0, bs.carbImpact);
+      bs.turnOffCarbs();
+      bs.turnOnCarbsWithImpact();
+      assert.equal(true, bs.hasCarbs);
+      assert.equal(0, bs.carbs);
+      assert.equal(0, bs.carbImpact);
     });
 
     it('Turn off carbs', function() {
@@ -284,6 +322,76 @@ describe('BloodSugar - bs.js', function() {
       assert.notEqual(0, bs.insulinSineSum);
       assert.notEqual(0, bs.insulinDelayCountDown);
       assert.notEqual(0, bs.insulinDoseCountDown);
+    });
+  });
+
+  describe('Add Exercise - Low', function() {
+    var bs = new BloodSugar(123);
+    it('Add exercise function - Low intensity', function() {
+      bs.addExercise(0);
+      assert.equal(10, bs.exerciseDelayCountDown);
+      assert.equal(30, bs.exerciseDurationOfImpact);
+      assert.equal(20, bs.exerciseImpactDefault);
+      assert.equal(1, bs.exerciseIntensity[0]);
+      assert.equal(3, bs.exerciseIntensity.length);
+      assert.equal(10, bs.exercise); // ExerciseImpactDefault / (60 / Duration of impact) * intensity
+      assert.equal(30, bs.exerciseDurationCountDown);
+    });
+  });
+
+  describe('Add Exercise - Medium', function() {
+    var bs = new BloodSugar(123);
+    it('Add exercise function - Medium intensity', function() {
+      bs.addExercise(1);
+      assert.equal(10, bs.exerciseDelayCountDown);
+      assert.equal(30, bs.exerciseDurationOfImpact);
+      assert.equal(20, bs.exerciseImpactDefault);
+      assert.equal(2, bs.exerciseIntensity[1]);
+      assert.equal(3, bs.exerciseIntensity.length);
+      assert.equal(20, bs.exercise); // ExerciseImpactDefault / (60 / Duration of impact) * intensity
+      assert.equal(30, bs.exerciseDurationCountDown);
+    });
+  });
+
+  describe('Add Exercise - High', function() {
+    var bs = new BloodSugar(123);
+    it('Add exercise function - High intensity', function() {
+      bs.addExercise(2);
+      assert.equal(10, bs.exerciseDelayCountDown);
+      assert.equal(30, bs.exerciseDurationOfImpact);
+      assert.equal(20, bs.exerciseImpactDefault);
+      assert.equal(4, bs.exerciseIntensity[2]);
+      assert.equal(3, bs.exerciseIntensity.length);
+      assert.equal(40, bs.exercise); // ExerciseImpactDefault / (60 / Duration of impact) * intensity
+      assert.equal(30, bs.exerciseDurationCountDown);
+    });
+  });
+
+  describe('Add Carbs', function() {
+    var bs = new BloodSugar(123);
+    it('Add carbs', function() {
+      bs.addCarbs(10);
+      assert.equal(10, bs.carbs);
+      assert.equal(20, bs.carbDurationMins);
+      assert.equal(5, bs.carbDelayCountDown);
+      assert.equal(20, bs.carbImpactCountDown);
+    });
+  });
+
+  describe('calcDrift()', function() {
+    var bs = new BloodSugar(123);
+    assert.equal(0, bs.calcDrift());
+
+    bs.turnOnDrift(10);
+
+    it('calcDrift', function() {
+      var maxDriftPerTick = bs.maxDrift / 60;
+      var n;
+      for (n = 0; n < 50000; n++) {
+        var d = bs.calcDrift();
+        assert.ok(d > (-1 * maxDriftPerTick));
+        assert.ok(d < maxDriftPerTick);
+      }
     });
   });
 });

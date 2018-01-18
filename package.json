@@ -53,7 +53,7 @@
     "jsdom": "^11.3.0",
     "jsdom-global": "^3.0.2",
     "json-loader": "0.5.7",
-    "mocha": "^4.0.1",
+    "mocha": "^5.0.0",
     "mocha-jsdom": "^1.1.0",
     "npm-run-all": "^4.1.2",
     "nyc": "^11.3.0",

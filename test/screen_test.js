@@ -3,20 +3,21 @@
 var assert = require('assert');
 var Screen = require('../lib/screen.js');
 var BloodSugar = require('../lib/bs.js');
+var Goal = require('../lib/goal.js');
 var GoalList = require('../lib/goalList.js');
 var d3 = require('d3');
 var svg = '<svg class="bgGraph" width="1200" height="600"></svg>';
 
 describe('Screen - screen.js', function() {
   this.timeout(10000);
-  before(function() {
+  beforeEach(function() {
     this.jsdom = require('jsdom-global')();
     var body = document.getElementsByTagName('body')[0];
     body.innerHTML = svg;
     console.log('before doc = ' + document.getElementsByTagName('html')[0].outerHTML);
   });
 
-  after(function() {
+  afterEach(function() {
     this.jsdom();
   });
 
@@ -32,8 +33,8 @@ describe('Screen - screen.js', function() {
       assert.equal(null, s.goalTimer);
       assert.equal(12, s.dotsPerHr);
       assert.equal(12, s.hrs);
-      assert.equal(2, s.guideDotsPerHr);
-      assert.equal(24, s.numOfGuideDots);
+      assert.equal(10, s.guideDotsPerHr);
+      assert.equal(120, s.numOfGuideDots);
       assert.equal(80, s.lowLevel);
       assert.equal(180, s.highLevel);
       assert.equal(250, s.maxHigh);
@@ -178,20 +179,183 @@ describe('Screen - screen.js', function() {
 
   describe('Draw', function() {
     it('test that drawing is done', function() {
+      var bs = new BloodSugar(100);
+      var gl = new GoalList();
+      var s = new Screen(bs, gl, 500, d3);
+      var node = null;
+      var count = 0;
+
+      // one way
       var elements = ['lowLine', 'highLine', 'maxLowLine', 'maxHighLine'];
       var idx;
       for (idx = 0; idx < elements.length; ++idx) {
         var e = elements[idx];
+        node = s.group.select(e);
+        assert(node, 'element: ' + e + ' missing.');
         var h = document.getElementsByClassName(e)[0];
         assert(h, 'element: ' + e + ' missing');
       }
+
+      // Another way
+      d3.selectAll('.lowLine').each(function(d, i) {
+        count += 1;
+      });
+      assert.equal(count, 120, 'Not 120 lowLine circles');
+
+      count = 0;
+      d3.selectAll('.highLine').each(function(d, i) {
+        count += 1;
+      });
+      assert.equal(count, 120, 'Not 120 highLine circles');
+
+      count = 0;
+      d3.selectAll('.maxLowLine').each(function(d, i) {
+        count += 1;
+      });
+      assert.equal(count, 120, 'Not 120 maxLowLine circles');
+
+      count = 0;
+      d3.selectAll('.maxHighLine').each(function(d, i) {
+        count += 1;
+      });
+      assert.equal(count, 120, 'Not 120 maxHighLine circles');
+
+      // assert.equal(d3.select('.startButton').attr('text'), 'Start');
+      s.group.selectAll('.startButton').each(function(d, i) {
+        console.log(d);
+        console.log(i);
+        // console.log(d.attr('text'));
+      });
+      node = s.group.select('.startButton');
+      // console.log(s);
+      s.group.each(function(d, i) {
+        console.log('d = ' + d);
+      });
+      console.log(s.group);
+      console.log(node);
+      // console.log(node.innerHTML());
+      // console.log(node.outerHTML());
+      // console.log(node.groups);
+      // console.log(node.attr('text'));
+      // console.log(node.text);
+      // assert.equal(node.text, 'Start');
+      // node.click();
 
       // Need more tests here
     });
   });
 
-  describe('Enable Bolus', function() {
-    it('Display bolus button', function() {
+  describe('BGL Text color', function() {
+    it('test normal bg is green', function() {
+      var bs = new BloodSugar(100);
+      var gl = new GoalList();
+      var s = new Screen(bs, gl, 500, d3);
+      assert.equal(s.group.select('.bgText').attr('fill'), '#0f0');
+    });
+    it('test medium bg is yellow', function() {
+      var bs = new BloodSugar(79);
+      var gl = new GoalList();
+      var s = new Screen(bs, gl, 500, d3);
+      assert.equal(s.group.select('.bgText').attr('fill'), '#ff0');
+    });
+    it('test max bg is red', function() {
+      var bs = new BloodSugar(40);
+      var gl = new GoalList();
+      var s = new Screen(bs, gl, 500, d3);
+      assert.equal(s.group.select('.bgText').attr('fill'), '#f00');
+    });
+  });
+
+  describe('Display Success', function() {
+    it('Display success message', function() {
+      var bs = new BloodSugar(100);
+      var gl = new GoalList();
+      var s = new Screen(bs, gl, 500, d3);
+      assert.equal(s.svg.select('.success').empty(), true);
+      s.displaySuccess();
+      console.log('-- Display Success --');
+      console.log(s.svg.select('.success'));
+      console.log(s.svg.select('.success').text());
+      assert.equal(s.svg.select('.success').text(), 'Good Job');
+    });
+  });
+
+  describe('Check Goals - No goals', function() {
+    it('Check goal - no goals', function() {
+      var bs = new BloodSugar(100);
+      var gl = new GoalList();
+      var s = new Screen(bs, gl, 500, d3);
+      var succ = s.svg.select('.success');
+
+      assert.equal(succ.empty(), true);
+      s.checkGoals(s);
+      succ = s.svg.select('.success');
+      assert.equal(succ.attr('fill'), '#ff0');
+      assert.equal(succ.text(), 'You did it!  Good Job!', 'No success display');
+    });
+  });
+  describe('Check Goals - Goals', function() {
+    it('Check goal - success screen if complete', function() {
+      var bs = new BloodSugar(100);
+      var gl = new GoalList();
+      var g = new Goal('testGoal', 0, 100, 1);
+      var s = new Screen(bs, gl, 500, d3);
+      var succ = s.svg.select('.success');
+
+      gl.addGoal(g);
+      assert.equal(succ.empty(), true);
+      s.checkGoals(s);
+      succ = s.svg.select('.success');
+      assert.equal(succ.attr('fill'), '#ff0');
+      assert.equal(succ.text(), 'You did it!  Good Job!', 'No success display');
+    });
+  });
+
+  describe('Check Tock', function() {
+    it('Check tock - normal BGL', function() {
+      var bs = new BloodSugar(100);
+      var gl = new GoalList();
+      var s = new Screen(bs, gl, 500, d3);
+      console.log('--Check Tock--');
+      assert.equal(s.minuteCount, 1, 'minuteCount not defaulting correctly');
+      assert.equal(s.interval, 5, 'Not defaulting to 5 minute intervals');
+      assert.equal(s.data.length, 1, 'Data should be 1');
+      assert.equal(s.histData.length, 1, 'histData should be 1');
+      assert.equal(s.textData[0], 100, 'Wrong default textData value');
+      assert.equal(s.svg.select('.bgText').attr('fill'), '#0f0');
+      s.tock(s);
+      assert.equal(s.minuteCount, 2, 'minuteCount not incrementing correctly');
+      s.tock(s);
+      assert.equal(s.minuteCount, 3, 'minuteCount not incrementing correctly');
+      s.tock(s);
+      assert.equal(s.minuteCount, 4, 'minuteCount not incrementing correctly');
+      s.tock(s);
+      assert.equal(s.minuteCount, 5, 'minuteCount not incrementing correctly');
+      s.tock(s);
+      assert.equal(s.minuteCount, 1, 'minuteCount not incrementing correctly');
+      assert.equal(s.data.length, 2, 'Data count should be 2');
+      assert.equal(s.histData.length, 2, 'histData count should be 2');
+      assert.equal(s.textData[0], 100, 'Wrong default textData value');
+    });
+    it('Check tock - yellow BGL', function() {
+      var bs = new BloodSugar(200);
+      var gl = new GoalList();
+      var s = new Screen(bs, gl, 500, d3);
+      assert.equal(s.svg.select('.bgText').attr('fill'), '#ff0');
+      s.tock(s);
+      assert.equal(s.svg.select('.bgText').attr('fill'), '#ff0');
+    });
+    it('Check tock - normal BGL', function() {
+      var bs = new BloodSugar(20);
+      var gl = new GoalList();
+      var s = new Screen(bs, gl, 500, d3);
+      assert.equal(s.svg.select('.bgText').attr('fill'), '#f00');
+      s.tock(s);
+      s.tock(s);
+      s.tock(s);
+      s.tock(s);
+      s.tock(s);
+      assert.equal(s.svg.select('.bgText').attr('fill'), '#f00');
     });
   });
 });

@@ -294,7 +294,7 @@ describe('Screen - screen.js', function() {
       assert.equal(succ.text(), 'You did it!  Good Job!', 'No success display');
     });
   });
-  describe('Check Goals - Goals', function() {
+  describe('Check Goals - Immediate Goal', function() {
     it('Check goal - success screen if complete', function() {
       var bs = new BloodSugar(100);
       var gl = new GoalList();
@@ -306,6 +306,38 @@ describe('Screen - screen.js', function() {
       assert.equal(succ.empty(), true);
       s.checkGoals(s);
       succ = s.svg.select('.success');
+      assert.equal(succ.attr('fill'), '#ff0');
+      assert.equal(succ.text(), 'You did it!  Good Job!', 'No success display');
+    });
+  });
+
+  describe('Check Goals - Eventual Goals', function() {
+    it('Check goal - success screen if complete', function() {
+      var bs = new BloodSugar(100);
+      var gl = new GoalList();
+      var g = new Goal('testGoal', 0, 100, 5);
+      var s = new Screen(bs, gl, 500, d3);
+      var succ = s.svg.select('.success');
+
+      console.log('-- Check goals - Long goal --');
+      gl.addGoal(g);
+      assert.equal(succ.empty(), true);
+      s.checkGoals(s);
+      succ = s.svg.select('.success');
+      assert.equal(succ.empty(), true);
+
+      // Go through some tocks
+      for (var i=0; i < 4*5; i += 1) {
+        console.log('i = ' + i);
+        s.tock(s);
+        s.checkGoals(s);
+        succ = s.svg.select('.success');
+        if (i == 19) {
+          assert.equal(succ.empty(), false);
+        } else {
+          assert.equal(succ.empty(), true);
+        }
+      }
       assert.equal(succ.attr('fill'), '#ff0');
       assert.equal(succ.text(), 'You did it!  Good Job!', 'No success display');
     });
@@ -343,6 +375,10 @@ describe('Screen - screen.js', function() {
       var s = new Screen(bs, gl, 500, d3);
       assert.equal(s.svg.select('.bgText').attr('fill'), '#ff0');
       s.tock(s);
+      s.tock(s);
+      s.tock(s);
+      s.tock(s);
+      s.tock(s);
       assert.equal(s.svg.select('.bgText').attr('fill'), '#ff0');
     });
     it('Check tock - normal BGL', function() {
@@ -356,6 +392,18 @@ describe('Screen - screen.js', function() {
       s.tock(s);
       s.tock(s);
       assert.equal(s.svg.select('.bgText').attr('fill'), '#f00');
+    });
+    it('Check tock - shift', function() {
+      var bs = new BloodSugar(20);
+      var gl = new GoalList();
+      var s = new Screen(bs, gl, 500, d3);
+      console.log('-- Check tock shift');
+      console.log(s.bgCount);
+      console.log(s.n);
+      for (var i=0; i <= 150*5; i += 1) {
+        s.tock(s);
+      }
+      assert.equal(s.bgCount, 143);
     });
   });
 });

@@ -60,7 +60,7 @@
     "nyc": "^12.0.2",
     "opt-cli": "1.6.0",
     "rimraf": "2.6.2",
-    "semantic-release": "15.5.1",
+    "semantic-release": "15.5.2",
     "sweetalert": "^2.0.8",
     "validate-commit-msg": "2.14.0",
     "webpack": "4.12.0"

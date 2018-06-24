@@ -47,7 +47,7 @@
     "commitizen": "2.10.1",
     "d3": "^5.0.0",
     "dom-parser": "^0.1.5",
-    "eslint": "^4.11.0",
+    "eslint": "^5.0.0",
     "eslint-config-google": "^0.9.1",
     "flow-bin": "^0.75.0",
     "ghooks": "2.0.3",

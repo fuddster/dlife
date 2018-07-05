@@ -63,7 +63,7 @@
     "semantic-release": "15.6.3",
     "sweetalert": "^2.0.8",
     "validate-commit-msg": "2.14.0",
-    "webpack": "4.15.0"
+    "webpack": "4.15.1"
   },
   "nyc": {
     "all": true,

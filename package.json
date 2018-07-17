@@ -62,7 +62,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "rimraf": "2.6.2",
-    "semantic-release": "15.7.2",
+    "semantic-release": "15.8.0",
     "sweetalert": "^2.0.8",
     "validate-commit-msg": "2.14.0",
     "webpack": "4.16.1"

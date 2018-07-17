@@ -406,4 +406,123 @@ describe('Screen - screen.js', function() {
       assert.equal(s.bgCount, 143);
     });
   });
+
+  describe('Check Enter', function() {
+    it('Check Enter', function() {
+      var bs = new BloodSugar(350);
+      var gl = new GoalList();
+      var s = new Screen(bs, gl, 500, d3);
+      console.log('--Check Enter--');
+      bs.addInsulin(10);
+      assert.equal(s.svg.select('.bgText').attr('fill'), '#f00');
+      for (var i=0; i <= 250; i += 1) {
+        console.log('i = ' + i + ': ' + bs.bloodSugar);
+        if ((i % 5) == 0) {
+          if (bs.bloodSugar > s.maxHigh) {
+            assert.equal(s.svg.select('.bgText').attr('fill'), '#f00');
+          }
+          if ((bs.bloodSugar > s.highLevel) && (bs.bloodSugar < s.maxHigh)) {
+            console.log(s.svg.select('.bgText').attr('fill'));
+            console.log(s.svg.select('.bgText').text());
+            assert.equal(s.svg.select('.bgText').attr('fill'), '#ff0');
+          }
+          if ((bs.bloodSugar > s.lowLevel) && (bs.bloodSugar < s.highLevel)) {
+            assert.equal(s.svg.select('.bgText').attr('fill'), '#0f0');
+          }
+          if ((bs.bloodSugar > s.maxLow) && (bs.bloodSugar < s.lowLevel)) {
+            assert.equal(s.svg.select('.bgText').attr('fill'), '#ff0');
+          }
+          if (bs.bloodSugar < s.maxLow) {
+            assert.equal(s.svg.select('.bgText').attr('fill'), '#f00');
+          }
+        }
+        s.tock(s);
+      }
+    });
+  });
+
+  describe('Check Start Click', function() {
+    it('Check Start Click', function() {
+      var bs = new BloodSugar(350);
+      var gl = new GoalList();
+      var s = new Screen(bs, gl, 500, d3);
+      console.log('--Check Start Click--');
+      var sb = s.svg.select('.startButton');
+      assert.equal(sb.text(), 'Start');
+      assert.equal(sb.attr('fill'), '#0f0');
+      sb.on('click')
+        .call(
+          sb.node(),
+          sb.datum()
+        );
+      assert.equal(sb.text(), 'Pause');
+      assert.equal(sb.attr('fill'), '#f00');
+      sb.on('click')
+        .call(
+          sb.node(),
+          sb.datum()
+        );
+      assert.equal(sb.text(), 'Resume');
+      assert.equal(sb.attr('fill'), '#0f0');
+      sb.on('click')
+        .call(
+          sb.node(),
+          sb.datum()
+        );
+      assert.equal(sb.text(), 'Pause');
+      assert.equal(sb.attr('fill'), '#f00');
+    });
+  });
+
+  describe('Check Set Bolus', function() {
+    it('Check Set Bolus', function() {
+      var bs = new BloodSugar(350);
+      var gl = new GoalList();
+      var s = new Screen(bs, gl, 100, d3);
+      console.log('--Check setBolus--');
+      assert.equal(bs.insulin, 0);
+      s.setBolus('1');
+      assert.equal(bs.insulin, 1);
+      s.setBolus();
+      assert.equal(bs.insulin, 1);
+      s.setBolus(null);
+      assert.equal(bs.insulin, 1);
+      s.setBolus('a');
+      assert.equal(bs.insulin, 1);
+      s.setBolus('10000');
+      assert.equal(bs.insulin, 10000);
+      s.setBolus(999);
+      assert.equal(bs.insulin, 999);
+      s.setBolus('45.6');
+      assert.equal(bs.insulin, 45.6);
+      s.setBolus(65.4);
+      assert.equal(bs.insulin, 65.4);
+    });
+  });
+
+  describe('Check Set Carbs', function() {
+    it('Check Set Carbs', function() {
+      var bs = new BloodSugar(350);
+      var gl = new GoalList();
+      var s = new Screen(bs, gl, 100, d3);
+      console.log('--Check setCarbs--');
+      assert.equal(bs.carbs, 0);
+      s.setCarbs('10');
+      assert.equal(bs.carbs, 10);
+      s.setCarbs();
+      assert.equal(bs.carbs, 10);
+      s.setCarbs(null);
+      assert.equal(bs.carbs, 10);
+      s.setCarbs('a');
+      assert.equal(bs.carbs, 10);
+      s.setCarbs('20000');
+      assert.equal(bs.carbs, 20000);
+      s.setCarbs(9999);
+      assert.equal(bs.carbs, 9999);
+      s.setCarbs(4.3);
+      assert.equal(bs.carbs, 4.3);
+      s.setCarbs('3.4');
+      assert.equal(bs.carbs, 3.4);
+    });
+  });
 });

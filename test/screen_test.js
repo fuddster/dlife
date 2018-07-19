@@ -523,6 +523,9 @@ describe('Screen - screen.js', function() {
       assert.equal(bs.carbs, 4.3);
       s.setCarbs('3.4');
       assert.equal(bs.carbs, 3.4);
+      // Kill timers
+      s = null;
+      console.log('--End Check setCarbs--');
     });
   });
 });

@@ -36,6 +36,7 @@
   },
   "homepage": "https://github.com/fuddster/dlife#readme",
   "dependencies": {
+    "npm": "^6.2.0",
     "npm-check-updates": "^2.13.0",
     "sinon": "^6.0.1",
     "unique-random-array": "1.0.1"
@@ -51,10 +52,10 @@
     "eslint-config-google": "^0.9.1",
     "flow-bin": "^0.76.0",
     "ghooks": "2.0.3",
-    "jsdom": "^11.3.0",
+    "jsdom": "^11.11.0",
     "jsdom-global": "^3.0.2",
     "json-loader": "0.5.7",
-    "mocha": "^5.0.0",
+    "mocha": "^5.2.0",
     "mocha-jsdom": "^2.0.0",
     "npm-run-all": "^4.1.2",
     "nyc": "^12.0.2",

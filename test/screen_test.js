@@ -471,6 +471,9 @@ describe('Screen - screen.js', function() {
         );
       assert.equal(sb.text(), 'Pause');
       assert.equal(sb.attr('fill'), '#f00');
+      // Kill timers
+      s.stopTimers(s);
+      s = null;
     });
   });
 
@@ -497,6 +500,10 @@ describe('Screen - screen.js', function() {
       assert.equal(bs.insulin, 45.6);
       s.setBolus(65.4);
       assert.equal(bs.insulin, 65.4);
+      // Kill timers
+      s.stopTimers(s);
+      s = null;
+      console.log('--End Check setBolus--');
     });
   });
 
@@ -524,6 +531,7 @@ describe('Screen - screen.js', function() {
       s.setCarbs('3.4');
       assert.equal(bs.carbs, 3.4);
       // Kill timers
+      s.stopTimers(s);
       s = null;
       console.log('--End Check setCarbs--');
     });

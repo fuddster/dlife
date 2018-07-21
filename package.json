@@ -50,7 +50,7 @@
     "dom-parser": "^0.1.5",
     "eslint": "^5.0.1",
     "eslint-config-google": "^0.9.1",
-    "flow-bin": "^0.76.0",
+    "flow-bin": "^0.77.0",
     "ghooks": "2.0.3",
     "jsdom": "^11.11.0",
     "jsdom-global": "^3.0.2",

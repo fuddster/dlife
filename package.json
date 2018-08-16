@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/fuddster/dlife#readme",
   "dependencies": {
-    "npm": "^6.3.0",
+    "npm": "^6.4.0",
     "npm-check-updates": "^2.13.0",
     "sinon": "^6.0.1",
     "unique-random-array": "1.0.1"

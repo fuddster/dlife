@@ -35,11 +35,14 @@
     "url": "https://github.com/fuddster/dlife/issues"
   },
   "homepage": "https://github.com/fuddster/dlife#readme",
+    "engines" : { 
+    "node" : ">=8.16.0" 
+  },
   "dependencies": {
     "dom-parser": "^0.1.6",
     "jsdom": "^15.1.1",
     "mocha": "^6.1.4",
-    "npm": "^8.16.0",
+    "npm": "^6.4.1",
     "npm-check-updates": "^3.1.9",
     "npm-run-all": "^4.1.5",
     "nyc": "^14.1.1",

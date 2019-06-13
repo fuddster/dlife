@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/dlife
     docker:
-      - image: circleci/node:boron
+      - image: circleci/node:carbon
       - image: mongo:3.4.4
     steps:
       - checkout

@@ -37,7 +37,7 @@
   "homepage": "https://github.com/fuddster/dlife#readme",
   "dependencies": {
     "dom-parser": "^0.1.6",
-    "jsdom": "^15.1.0",
+    "jsdom": "15.1.0",
     "mocha": "^6.1.4",
     "npm": "^6.9.0",
     "npm-check-updates": "^3.1.9",

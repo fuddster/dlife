@@ -57,7 +57,7 @@
     "d3": "^5.0.0",
     "eslint": "^6.0.0",
     "eslint-config-google": "^0.14.0",
-    "flow-bin": "^0.114.0",
+    "flow-bin": "^0.117.0",
     "ghooks": "2.0.4",
     "jsdom-global": "^3.0.2",
     "json-loader": "0.5.7",

@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/dlife
     docker:
-      - image: circleci/node:Erbium
+      - image: circleci/node:12.16.1
       - image: mongo:3.4.4
     steps:
       - checkout

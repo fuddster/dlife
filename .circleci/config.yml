@@ -33,6 +33,7 @@ jobs:
           prefix: coverage
       - store_test_results:
           path: test-results.xml
-      - snyk/scan
+      - snyk/scan:
+          fail-on-issues: false
 orbs:
   snyk: snyk/snyk@0.0.9

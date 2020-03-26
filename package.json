@@ -6,7 +6,8 @@
   "scripts": {
     "commit": "git-cz",
     "prebuild": "rimraf dist",
-    "test": "snyk test && nyc mocha",
+    "test": "nyc mocha",
+    "testsnyk": "snyk test",
     "testhtml": "nyc --reporter=html --reporter=text mocha",
     "watch:test": "mocha --watch",
     "lint": "eslint lib",

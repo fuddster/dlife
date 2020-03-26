@@ -6,7 +6,7 @@
   "scripts": {
     "commit": "git-cz",
     "prebuild": "rimraf dist",
-    "test": "nyc mocha",
+    "test": "snyk test && nyc mocha",
     "testhtml": "nyc --reporter=html --reporter=text mocha",
     "watch:test": "mocha --watch",
     "lint": "eslint lib",
@@ -69,6 +69,7 @@
     "opt-cli": "1.6.0",
     "rimraf": "3.0.2",
     "semantic-release": "^17.0.4",
+    "snyk": "^1.305.0",
     "validate-commit-msg": "2.14.0"
   },
   "nyc": {

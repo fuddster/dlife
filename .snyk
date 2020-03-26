@@ -1,0 +1,29 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.5
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JS-DOTPROP-543489:
+    - npm > update-notifier > configstore > dot-prop:
+        reason: None given
+        expires: '2020-04-25T05:38:39.147Z'
+    - npm > libnpx > update-notifier > configstore > dot-prop:
+        reason: None given
+        expires: '2020-04-25T05:38:39.147Z'
+  SNYK-JS-YARGSPARSER-560381:
+    - npm > libnpx > yargs > yargs-parser:
+        reason: None given
+        expires: '2020-04-25T05:38:39.147Z'
+  SNYK-JS-MINIMIST-559764:
+    - npm > update-notifier > latest-version > package-json > registry-auth-token > rc > minimist:
+        reason: None given
+        expires: '2020-04-25T05:38:39.147Z'
+    - npm > update-notifier > latest-version > package-json > registry-url > rc > minimist:
+        reason: None given
+        expires: '2020-04-25T05:38:39.147Z'
+    - npm > libnpx > update-notifier > latest-version > package-json > registry-auth-token > rc > minimist:
+        reason: None given
+        expires: '2020-04-25T05:38:39.147Z'
+    - npm > libnpx > update-notifier > latest-version > package-json > registry-url > rc > minimist:
+        reason: None given
+        expires: '2020-04-25T05:38:39.147Z'
+patch: {}

@@ -13,7 +13,9 @@
     "lint": "eslint lib",
     "flow": "flow",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
-    "validate": "npm-run-all --parallel test lint"
+    "validate": "npm-run-all --parallel test lint",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -52,7 +54,8 @@
     "sinon": "^9.0.1",
     "sweetalert2": "^9.10.6",
     "unique-random-array": "2.0.0",
-    "webpack": "4.43.0"
+    "webpack": "4.43.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "babel-plugin-istanbul": "^6.0.0",
@@ -70,7 +73,6 @@
     "opt-cli": "1.6.0",
     "rimraf": "3.0.2",
     "semantic-release": "^17.0.4",
-    "snyk": "^1.305.0",
     "validate-commit-msg": "2.14.0"
   },
   "nyc": {
@@ -88,5 +90,6 @@
       "lib"
     ],
     "sourceMap": false
-  }
+  },
+  "snyk": true
 }

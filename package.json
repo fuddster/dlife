@@ -52,7 +52,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "sinon": "^9.0.1",
-    "sweetalert2": "^9.10.6",
+    "sweetalert2": "^11.3.10",
     "unique-random-array": "2.0.0",
     "webpack": "5.15.0",
     "snyk": "^1.316.1"

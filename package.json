@@ -44,7 +44,7 @@
   "dependencies": {
     "d3": "^5.15.0",
     "dom-parser": "^0.1.6",
-    "jsdom": "^16.2.1",
+    "jsdom": "^19.0.0",
     "jsdom-global": "^3.0.2",
     "json-loader": "0.5.7",
     "npm": "^7.0.0",
